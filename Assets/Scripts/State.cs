@@ -9,17 +9,22 @@ public class State : MonoBehaviour
     public Quball quballPrefab;
     public float timeScale = 1;
     public AnimationCurve bounceCurve;
+    public AnimationCurve bounceCurveSide;
 
     public float time;
     public List<Quball> quballs;
 
     private void Update()
     {
+        quballs.RemoveAll(q => q == null);
+
         var timePrev = time;
         time += timeScale * Time.deltaTime;
+
+        if (Mathf.FloorToInt(time + .3f) > Mathf.FloorToInt(timePrev + .3f)) Collapse();
+
         if (Mathf.FloorToInt(time) > Mathf.FloorToInt(timePrev))
         {
-            Collapse();
             var randomGate = Random.Range(0, 3);
             switch (randomGate)
             {
@@ -38,7 +43,7 @@ public class State : MonoBehaviour
         var timeFrac = time - Mathf.FloorToInt(time);
         foreach (var q in quballs)
             q.transform.position = new Vector3(
-                Mathf.Lerp(q.statePrevious, q.stateCurrent, timeFrac),
+                Mathf.Lerp(q.statePrevious, q.stateCurrent, bounceCurveSide.Evaluate(timeFrac)),
                 -1 * (Mathf.FloorToInt(time) + bounceCurve.Evaluate(timeFrac)),
                 0
             );
@@ -46,23 +51,25 @@ public class State : MonoBehaviour
 
     public void Collapse()
     {
-        var stateDict = new Dictionary<int, Complex>();
-        foreach (var q in quballs)
+        foreach (var state in quballs.Select(q => q.stateCurrent).ToHashSet())
         {
-            stateDict.TryAdd(q.stateCurrent, Complex.Zero);
-            stateDict[q.stateCurrent] += q.amplitude;
-            Destroy(q.gameObject);
-        }
+            var qs = quballs.Where(q => q.stateCurrent == state).ToList();
+            if (qs.Count <= 1) continue;
 
-        quballs.Clear();
+            var totalAmplitude = Complex.Zero;
+            foreach (var q in qs)
+            {
+                totalAmplitude += q.amplitude;
+                Destroy(q.gameObject);
+            }
 
-        foreach (var kvp in stateDict)
-        {
-            if (kvp.Value.Magnitude < 1e-3) continue;
+            if (totalAmplitude.Magnitude < 1e-3) continue;
             var newQuball = Instantiate(quballPrefab, transform);
-            newQuball.Set(kvp.Key, kvp.Key, kvp.Value);
+            newQuball.Set(state, state, totalAmplitude);
             quballs.Add(newQuball);
         }
+
+        quballs.RemoveAll(q => q == null);
     }
 
     public void GateX(int id)

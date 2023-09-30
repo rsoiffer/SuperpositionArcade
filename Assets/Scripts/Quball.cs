@@ -10,14 +10,14 @@ public class Quball : MonoBehaviour
     private float _baseHue;
     private Vector3 _baseScale;
 
-    private MeshRenderer _meshRenderer;
+    private Renderer _renderer;
 
     public Complex amplitude = Complex.One;
 
     private void Awake()
     {
-        _meshRenderer = GetComponent<MeshRenderer>();
-        Color.RGBToHSV(_meshRenderer.material.color, out var h, out var s, out var v);
+        _renderer = GetComponentInChildren<Renderer>();
+        Color.RGBToHSV(_renderer.material.color, out var h, out var s, out var v);
         _baseHue = h;
         _baseScale = transform.localScale;
     }
@@ -29,7 +29,7 @@ public class Quball : MonoBehaviour
         amplitude = newAmplitude;
 
         var hue = _baseHue + (float)amplitude.Phase / (2 * Mathf.PI);
-        _meshRenderer.material.color = Color.HSVToRGB(hue - Mathf.FloorToInt(hue), 1, 1);
+        _renderer.material.color = Color.HSVToRGB(hue - Mathf.FloorToInt(hue), 1, 1);
         transform.localScale = _baseScale * (float)amplitude.Magnitude;
     }
 }
