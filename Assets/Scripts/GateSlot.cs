@@ -10,6 +10,7 @@ public class GateSlot : MonoBehaviour, IDropHandler
         if (!infiniteSource && GetComponentInChildren<Gate>() != null) return;
         var dropped = eventData.pointerDrag;
         var gate = dropped.GetComponent<Gate>();
+        if (gate == null) return;
         gate.slot = transform;
         if (infiniteSource) Destroy(gate.gameObject);
     }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using UnityEngine;
-using Random = UnityEngine.Random;
 using Vector3 = UnityEngine.Vector3;
 
 public class State : MonoBehaviour
@@ -13,11 +12,15 @@ public class State : MonoBehaviour
     public AnimationCurve bounceCurve;
     public AnimationCurve bounceCurveSide;
     public Level level;
-    public Vector3 noiseScale = new(.2f, 0, 0);
     public float collapsePreempt = .2f;
 
     public float time;
     public List<Quball> quballs;
+
+    private void Start()
+    {
+        foreach (var q in quballs) q.Set(q.stateCurrent, q.Amplitude);
+    }
 
     private void Update()
     {
@@ -30,12 +33,7 @@ public class State : MonoBehaviour
 
         if (Mathf.FloorToInt(time) > Mathf.FloorToInt(timePrev))
         {
-            foreach (var q in quballs)
-            {
-                q.Set(q.stateCurrent, q.stateCurrent, q.Amplitude);
-                q.previousPosNoise = q.currentPosNoise;
-                q.currentPosNoise = noiseScale * Random.insideUnitCircle;
-            }
+            foreach (var q in quballs) q.Step();
 
             var rowId = Mathf.FloorToInt(time) - 1;
             if (rowId < level.numRows)
@@ -61,6 +59,11 @@ public class State : MonoBehaviour
             else
                 Destroy(gameObject);
         }
+    }
+
+    private void LateUpdate()
+    {
+        quballs.RemoveAll(q => q == null);
 
         var timeFrac = time - Mathf.FloorToInt(time);
         foreach (var q in quballs)
@@ -92,7 +95,7 @@ public class State : MonoBehaviour
 
             if (totalAmplitude.Magnitude < 1e-3) continue;
             var newQuball = Instantiate(quballPrefab, transform);
-            newQuball.Set(state, state, totalAmplitude);
+            newQuball.Set(state, totalAmplitude);
             quballs.Add(newQuball);
         }
 
@@ -101,13 +104,13 @@ public class State : MonoBehaviour
 
     public void GateX(int id)
     {
-        foreach (var q in quballs) q.Set(q.stateCurrent ^ (1 << id), q.statePrevious, q.Amplitude);
+        foreach (var q in quballs) q.Set(q.stateCurrent ^ (1 << id), q.Amplitude);
     }
 
     public void GateZ(int id)
     {
         foreach (var q in quballs)
-            q.Set(q.stateCurrent, q.statePrevious, q.Amplitude * ((q.stateCurrent & (1 << id)) == 0 ? 1 : -1));
+            q.Set(q.stateCurrent, q.Amplitude * (q.Bit(id) ? -1 : 1));
     }
 
     public void GateH(int id)
@@ -115,10 +118,10 @@ public class State : MonoBehaviour
         foreach (var q in quballs.ToList())
         {
             var newQuball = Instantiate(quballPrefab, transform);
-            newQuball.Set(q.stateCurrent ^ (1 << id), q.statePrevious, q.Amplitude / Mathf.Sqrt(2));
+            newQuball.Set(q.statePrevious, q.Amplitude / Mathf.Sqrt(2));
+            newQuball.Set(q.stateCurrent ^ (1 << id), q.Amplitude / Mathf.Sqrt(2));
             quballs.Add(newQuball);
-            q.Set(q.stateCurrent, q.stateCurrent,
-                q.Amplitude * ((q.stateCurrent & (1 << id)) == 0 ? 1 : -1) / Mathf.Sqrt(2));
+            q.Set(q.stateCurrent, (q.Bit(id) ? -1 : 1) * q.Amplitude / Mathf.Sqrt(2));
         }
     }
 }
