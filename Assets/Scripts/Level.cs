@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,7 +16,12 @@ public class Level : MonoBehaviour
 
     private void Start()
     {
-        for (var i = 0; i < 1 << numBits; i++) Instantiate(bucketPrefab, bucketsParent);
+        for (var i = 0; i < 1 << numBits; i++)
+        {
+            var bucket = Instantiate(bucketPrefab, bucketsParent);
+            bucket.GetComponentInChildren<TextMeshProUGUI>().text =
+                $"|{Convert.ToString(i, 2).PadLeft(numBits, '0')}}}";
+        }
 
         commandGrid.constraintCount = numBits;
         for (var i = 0; i < numBits; i++)

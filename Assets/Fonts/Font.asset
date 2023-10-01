@@ -16,11 +16,11 @@ MonoBehaviour:
   material: {fileID: 1218343156086444535}
   materialHashCode: -924628557
   m_Version: 1.1.0
-  m_SourceFontFileGUID: 675b9b07ea354504dbc09425f2de260b
-  m_SourceFontFile_EditorRef: {fileID: 12800000, guid: 675b9b07ea354504dbc09425f2de260b,
+  m_SourceFontFileGUID: 25293d64cbb2dfc43a6ece7f4dbc2ee2
+  m_SourceFontFile_EditorRef: {fileID: 12800000, guid: 25293d64cbb2dfc43a6ece7f4dbc2ee2,
     type: 3}
-  m_SourceFontFile: {fileID: 0}
-  m_AtlasPopulationMode: 0
+  m_SourceFontFile: {fileID: 12800000, guid: 25293d64cbb2dfc43a6ece7f4dbc2ee2, type: 3}
+  m_AtlasPopulationMode: 1
   m_FaceInfo:
     m_FaceIndex: 0
     m_FamilyName: Share Tech Mono
@@ -3904,8 +3904,9 @@ MonoBehaviour:
     m_Scale: 1
   m_AtlasTextures:
   - {fileID: 6933706777492344862}
+  - {fileID: 0}
   m_AtlasTextureIndex: 0
-  m_IsMultiAtlasTexturesEnabled: 0
+  m_IsMultiAtlasTexturesEnabled: 1
   m_ClearDynamicDataOnBuild: 0
   m_UsedGlyphRects:
   - m_X: 0
@@ -5217,7 +5218,7 @@ MonoBehaviour:
     atlasWidth: 1024
     atlasHeight: 1024
     characterSetSelectionMode: 6
-    characterSequence: 20-7E,A1-AC,AE-FF,2014,2018-201E,2020,2022,2026,2039-203A,20AC,2122
+    characterSequence: 20-7E,A1-AC,AE-FF,2014,2018-201A,201C-201E,2020,2022,2026,2039-203A,20AC,2122
     referencedFontAssetGUID: f61583a70fbe8e048abd2e92e69d0a42
     referencedTextAssetGUID: 
     fontStyle: 0
