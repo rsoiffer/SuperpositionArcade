@@ -10,6 +10,13 @@ public class Gate : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     public void OnBeginDrag(PointerEventData eventData)
     {
         slot = transform.parent;
+        var gateSlot = slot.GetComponentInParent<GateSlot>();
+        if (gateSlot != null && gateSlot.infiniteSource)
+        {
+            var copy = Instantiate(gameObject, transform.parent);
+            copy.transform.SetSiblingIndex(transform.GetSiblingIndex());
+        }
+
         transform.SetParent(transform.root);
         transform.SetAsLastSibling();
         image.raycastTarget = false;
