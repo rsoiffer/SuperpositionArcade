@@ -22,8 +22,11 @@ public class Level : MonoBehaviour
     public GameObject pegPrefab;
 
     public State statePrefab;
+    public float spawnRate = 1;
+    public int updateAfterFrames = 2;
 
     public Gate[,] gateGrid;
+    public (int, int) prevScreenSize;
 
     public GateSlot[,] slotGrid;
 
@@ -57,33 +60,41 @@ public class Level : MonoBehaviour
 
     private void Update()
     {
+        updateAfterFrames -= 1;
+
         var newGateGrid = new Gate[numBits, numRows];
         for (var i = 0; i < numBits; i++)
         for (var j = 0; j < numRows; j++)
             newGateGrid[i, j] = slotGrid[i, j].GetComponentInChildren<Gate>();
 
-        if (SequenceEquals(newGateGrid, gateGrid)) return;
+        var newScreenSize = (Screen.width, Screen.height);
+
+        if (SequenceEquals(newGateGrid, gateGrid) && newScreenSize == prevScreenSize && updateAfterFrames != 0) return;
         gateGrid = newGateGrid;
+        prevScreenSize = newScreenSize;
 
         if (pegParent != null) Destroy(pegParent.gameObject);
         pegParent = new GameObject("Peg Parent").transform;
         pegParent.SetParent(transform);
 
         for (var j = 0; j < numRows; j++)
-            if (Enumerable.Range(0, numBits).Any(i => gateGrid[i, j] != null))
-                // There is at least one gate in this row
-                for (var i = 0; i < bucketsParent.childCount; i++)
-                {
-                    var newPeg = Instantiate(pegPrefab, pegParent);
-                    newPeg.transform.position = PegPos(i, j);
-                }
+        {
+            var anyGate = Enumerable.Range(0, numBits).Any(i => gateGrid[i, j] != null);
+            // There is at least one gate in this row
+            // if (anyGate)
+            for (var i = 0; i < bucketsParent.childCount; i++)
+            {
+                var newPeg = Instantiate(pegPrefab, pegParent);
+                newPeg.transform.position = PegPos(i, j);
+            }
+        }
     }
 
     private IEnumerator SpawnCoroutine()
     {
         while (true)
         {
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(1 / spawnRate);
             var newState = Instantiate(statePrefab);
             newState.level = this;
         }

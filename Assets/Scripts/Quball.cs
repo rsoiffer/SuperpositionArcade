@@ -7,6 +7,9 @@ public class Quball : MonoBehaviour
     public int stateCurrent;
     public int statePrevious;
 
+    public Vector3 currentPosNoise;
+    public Vector3 previousPosNoise;
+
     public float debugReal;
     public float debugImaginary;
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using UnityEngine;
+using Random = UnityEngine.Random;
 using Vector3 = UnityEngine.Vector3;
 
 public class State : MonoBehaviour
@@ -12,6 +13,7 @@ public class State : MonoBehaviour
     public AnimationCurve bounceCurve;
     public AnimationCurve bounceCurveSide;
     public Level level;
+    public float noiseScale = .1f;
 
     public float time;
     public List<Quball> quballs;
@@ -27,7 +29,12 @@ public class State : MonoBehaviour
 
         if (Mathf.FloorToInt(time) > Mathf.FloorToInt(timePrev))
         {
-            foreach (var q in quballs) q.Set(q.stateCurrent, q.stateCurrent, q.Amplitude);
+            foreach (var q in quballs)
+            {
+                q.Set(q.stateCurrent, q.stateCurrent, q.Amplitude);
+                q.previousPosNoise = q.currentPosNoise;
+                q.currentPosNoise = noiseScale * Random.insideUnitCircle;
+            }
 
             var rowId = Mathf.FloorToInt(time) - 1;
             if (rowId < level.numRows)
@@ -58,8 +65,8 @@ public class State : MonoBehaviour
         foreach (var q in quballs)
         {
             var rowId = Mathf.FloorToInt(time);
-            var currentPos = level.PegPos(q.stateCurrent, rowId);
-            var previousPos = level.PegPos(q.statePrevious, rowId - 1);
+            var currentPos = level.PegPos(q.stateCurrent, rowId) + q.currentPosNoise;
+            var previousPos = level.PegPos(q.statePrevious, rowId - 1) + q.previousPosNoise;
             q.transform.position = new Vector3(
                 Mathf.LerpUnclamped(previousPos.x, currentPos.x, bounceCurveSide.Evaluate(timeFrac)),
                 Mathf.LerpUnclamped(previousPos.y, currentPos.y, bounceCurve.Evaluate(timeFrac)),
