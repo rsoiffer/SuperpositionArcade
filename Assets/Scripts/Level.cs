@@ -1,16 +1,29 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Level : MonoBehaviour
 {
     public int numBits;
+
+    public Transform bucketsParent;
     public GameObject bucketPrefab;
+
+    public GridLayoutGroup commandGrid;
+    public GameObject columnLabelPrefab;
+    public GameObject gateSlotPrefab;
 
     private void Start()
     {
-        for (var i = 0; i < 1 << numBits; i++)
+        for (var i = 0; i < 1 << numBits; i++) Instantiate(bucketPrefab, bucketsParent);
+
+        commandGrid.constraintCount = numBits;
+        for (var i = 0; i < numBits; i++)
         {
-            var newBucket = Instantiate(bucketPrefab, transform);
-            newBucket.transform.position = new Vector3(i, 0, 0);
+            var columnLabel = Instantiate(columnLabelPrefab, commandGrid.transform);
+            columnLabel.GetComponentInChildren<TextMeshProUGUI>().text = $"{i}";
         }
+
+        for (var i = 0; i < 2 * numBits; i++) Instantiate(gateSlotPrefab, commandGrid.transform);
     }
 }
