@@ -13,7 +13,8 @@ public class State : MonoBehaviour
     public AnimationCurve bounceCurve;
     public AnimationCurve bounceCurveSide;
     public Level level;
-    public float noiseScale = .1f;
+    public Vector3 noiseScale = new(.2f, 0, 0);
+    public float collapsePreempt = .2f;
 
     public float time;
     public List<Quball> quballs;
@@ -25,7 +26,7 @@ public class State : MonoBehaviour
         var timePrev = time;
         time += timeScale * Time.deltaTime;
 
-        if (Mathf.FloorToInt(time + .3f) > Mathf.FloorToInt(timePrev + .3f)) Collapse();
+        if (Mathf.FloorToInt(time + collapsePreempt) > Mathf.FloorToInt(timePrev + collapsePreempt)) Collapse();
 
         if (Mathf.FloorToInt(time) > Mathf.FloorToInt(timePrev))
         {

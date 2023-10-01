@@ -47,8 +47,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stateCurrent: 0
   statePrevious: 0
+  currentPosNoise: {x: 0, y: 0, z: 0}
+  previousPosNoise: {x: 0, y: 0, z: 0}
   debugReal: 0
   debugImaginary: 0
+  scalePower: 0.6666667
   baseHue: 0.52
   baseScale: {x: 0, y: 0, z: 0}
   renderer: {fileID: 0}

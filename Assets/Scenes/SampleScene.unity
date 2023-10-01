@@ -839,7 +839,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdaa522debc265b4db57345b80cdfe9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numBits: 3
+  numBits: 2
   numRows: 4
   bucketsParent: {fileID: 539504116}
   bucketPrefab: {fileID: 5954613784015183681, guid: ce030ff33297225459d7f4a36d4a4b65,
@@ -854,6 +854,20 @@ MonoBehaviour:
     type: 3}
   statePrefab: {fileID: 7089078236139258751, guid: 1dc8d932fd7f9a94f9e9e0ff642b1ce1,
     type: 3}
+  spawnRate: 1
+  updateAfterFrames: 2
+  dimensionsAlphabet:
+  - "\u03B1"
+  - "\u03B2"
+  - "\u03B3"
+  - "\u03B4"
+  - "\u03B5"
+  dimensionsColors:
+  - {r: 0.39999998, g: 0.5599998, b: 1, a: 0}
+  - {r: 0.2980392, g: 0.7471678, b: 1, a: 0}
+  - {r: 0.20392157, g: 1, b: 0.8117647, a: 0}
+  - {r: 0.34961888, g: 1, b: 0.1830188, a: 0}
+  - {r: 0.8563744, g: 1, b: 0.22075468, a: 0}
 --- !u!4 &639885579
 Transform:
   m_ObjectHideFlags: 0
@@ -1398,6 +1412,11 @@ PrefabInstance:
       propertyPath: m_text
       value: H
       objectReference: {fileID: 0}
+    - target: {fileID: 4627628615169408246, guid: 600735dd44b0e7e478f40807c93a0643,
+        type: 3}
+      propertyPath: m_fontStyle
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5872399255915052386, guid: 600735dd44b0e7e478f40807c93a0643,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1786,6 +1805,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Gate
       objectReference: {fileID: 0}
+    - target: {fileID: 4627628615169408246, guid: 600735dd44b0e7e478f40807c93a0643,
+        type: 3}
+      propertyPath: m_fontStyle
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5872399255915052386, guid: 600735dd44b0e7e478f40807c93a0643,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1987,6 +2011,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_text
       value: Z
+      objectReference: {fileID: 0}
+    - target: {fileID: 4627628615169408246, guid: 600735dd44b0e7e478f40807c93a0643,
+        type: 3}
+      propertyPath: m_fontStyle
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5872399255915052386, guid: 600735dd44b0e7e478f40807c93a0643,
         type: 3}

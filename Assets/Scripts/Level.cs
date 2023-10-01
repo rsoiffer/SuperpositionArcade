@@ -25,6 +25,9 @@ public class Level : MonoBehaviour
     public float spawnRate = 1;
     public int updateAfterFrames = 2;
 
+    public string[] dimensionsAlphabet;
+    public Color[] dimensionsColors;
+
     public Gate[,] gateGrid;
     public (int, int) prevScreenSize;
 
@@ -37,15 +40,20 @@ public class Level : MonoBehaviour
         for (var i = 0; i < 1 << numBits; i++)
         {
             var bucket = Instantiate(bucketPrefab, bucketsParent);
-            bucket.GetComponentInChildren<TextMeshProUGUI>().text =
-                $"|{Convert.ToString(i, 2).PadLeft(numBits, '0')}}}";
+            var tmp = bucket.GetComponentInChildren<TextMeshProUGUI>();
+            var stateChars = Convert.ToString(i, 2).PadLeft(numBits, '0').ToCharArray();
+            Array.Reverse(stateChars);
+            var stateText = string.Join("",
+                stateChars.Select((c, idx) => $"<color={ToRGBHex(dimensionsColors[idx])}>{c}</color>"));
+            tmp.text = $"|{stateText}}}";
         }
 
         commandGrid.constraintCount = numBits;
         for (var i = 0; i < numBits; i++)
         {
             var columnLabel = Instantiate(columnLabelPrefab, commandGrid.transform);
-            columnLabel.GetComponentInChildren<TextMeshProUGUI>().text = $"{i}";
+            var tmp = columnLabel.GetComponentInChildren<TextMeshProUGUI>();
+            tmp.text = $"<color={ToRGBHex(dimensionsColors[i])}>{dimensionsAlphabet[i]}</color>";
         }
 
         for (var j = 0; j < numRows; j++)
@@ -120,5 +128,16 @@ public class Level : MonoBehaviour
         return a.Rank == b.Rank
                && Enumerable.Range(0, a.Rank).All(d => a.GetLength(d) == b.GetLength(d))
                && a.Cast<T>().Zip(b.Cast<T>(), (arg1, arg2) => arg1 == arg2).All(x => x);
+    }
+
+    public static string ToRGBHex(Color c)
+    {
+        return $"#{ToByte(c.r):X2}{ToByte(c.g):X2}{ToByte(c.b):X2}";
+    }
+
+    private static byte ToByte(float f)
+    {
+        f = Mathf.Clamp01(f);
+        return (byte)(f * 255);
     }
 }

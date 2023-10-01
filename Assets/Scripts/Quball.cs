@@ -13,6 +13,7 @@ public class Quball : MonoBehaviour
     public float debugReal;
     public float debugImaginary;
 
+    public float scalePower = 1;
     public float baseHue;
     public Vector3 baseScale;
     public Renderer renderer;
@@ -34,7 +35,7 @@ public class Quball : MonoBehaviour
 
         var hue = baseHue + (float)Amplitude.Phase / (2 * Mathf.PI);
         renderer.material.color = Color.HSVToRGB(hue - Mathf.FloorToInt(hue), 1, 1);
-        transform.localScale = baseScale * (float)Amplitude.Magnitude;
+        transform.localScale = baseScale * Mathf.Pow((float)Amplitude.Magnitude, scalePower);
 
         debugReal = (float)Amplitude.Real;
         debugImaginary = (float)Amplitude.Imaginary;
