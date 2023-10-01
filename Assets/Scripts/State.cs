@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -10,6 +11,7 @@ public class State : MonoBehaviour
     public float timeScale = 1;
     public AnimationCurve bounceCurve;
     public AnimationCurve bounceCurveSide;
+    public Level level;
 
     public float time;
     public List<Quball> quballs;
@@ -25,28 +27,43 @@ public class State : MonoBehaviour
 
         if (Mathf.FloorToInt(time) > Mathf.FloorToInt(timePrev))
         {
-            var randomGate = Random.Range(0, 3);
-            switch (randomGate)
-            {
-                case 0:
-                    GateX(0);
-                    break;
-                case 1:
-                    GateZ(0);
-                    break;
-                case 2:
-                    GateH(0);
-                    break;
-            }
+            foreach (var q in quballs) q.Set(q.stateCurrent, q.stateCurrent, q.Amplitude);
+
+            var rowId = Mathf.FloorToInt(time) - 1;
+            if (rowId < level.numRows)
+                for (var i = 0; i < level.numBits; i++)
+                {
+                    var gate = level.gateGrid[i, rowId];
+                    if (gate != null)
+                        switch (gate.type)
+                        {
+                            case GateType.X:
+                                GateX(i);
+                                break;
+                            case GateType.Z:
+                                GateZ(i);
+                                break;
+                            case GateType.H:
+                                GateH(i);
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
+                }
         }
 
         var timeFrac = time - Mathf.FloorToInt(time);
         foreach (var q in quballs)
+        {
+            var rowId = Mathf.FloorToInt(time);
+            var currentPos = level.PegPos(q.stateCurrent, rowId);
+            var previousPos = level.PegPos(q.statePrevious, rowId - 1);
             q.transform.position = new Vector3(
-                Mathf.Lerp(q.statePrevious, q.stateCurrent, bounceCurveSide.Evaluate(timeFrac)),
-                -1 * (Mathf.FloorToInt(time) + bounceCurve.Evaluate(timeFrac)),
+                Mathf.LerpUnclamped(previousPos.x, currentPos.x, bounceCurveSide.Evaluate(timeFrac)),
+                Mathf.LerpUnclamped(previousPos.y, currentPos.y, bounceCurve.Evaluate(timeFrac)),
                 0
             );
+        }
     }
 
     public void Collapse()
@@ -59,7 +76,7 @@ public class State : MonoBehaviour
             var totalAmplitude = Complex.Zero;
             foreach (var q in qs)
             {
-                totalAmplitude += q.amplitude;
+                totalAmplitude += q.Amplitude;
                 Destroy(q.gameObject);
             }
 
@@ -74,13 +91,13 @@ public class State : MonoBehaviour
 
     public void GateX(int id)
     {
-        foreach (var q in quballs) q.Set(q.stateCurrent ^ (1 << id), q.stateCurrent, q.amplitude);
+        foreach (var q in quballs) q.Set(q.stateCurrent ^ (1 << id), q.statePrevious, q.Amplitude);
     }
 
     public void GateZ(int id)
     {
         foreach (var q in quballs)
-            q.Set(q.stateCurrent, q.stateCurrent, q.amplitude * ((q.stateCurrent & (1 << id)) == 0 ? 1 : -1));
+            q.Set(q.stateCurrent, q.statePrevious, q.Amplitude * ((q.stateCurrent & (1 << id)) == 0 ? 1 : -1));
     }
 
     public void GateH(int id)
@@ -88,10 +105,10 @@ public class State : MonoBehaviour
         foreach (var q in quballs.ToList())
         {
             var newQuball = Instantiate(quballPrefab, transform);
-            newQuball.Set(q.stateCurrent ^ (1 << id), q.stateCurrent, q.amplitude / Mathf.Sqrt(2));
+            newQuball.Set(q.stateCurrent ^ (1 << id), q.statePrevious, q.Amplitude / Mathf.Sqrt(2));
             quballs.Add(newQuball);
             q.Set(q.stateCurrent, q.stateCurrent,
-                q.amplitude * ((q.stateCurrent & (1 << id)) == 0 ? 1 : -1) / Mathf.Sqrt(2));
+                q.Amplitude * ((q.stateCurrent & (1 << id)) == 0 ? 1 : -1) / Mathf.Sqrt(2));
         }
     }
 }

@@ -7,29 +7,32 @@ public class Quball : MonoBehaviour
     public int stateCurrent;
     public int statePrevious;
 
-    private float _baseHue;
-    private Vector3 _baseScale;
+    public float debugReal;
+    public float debugImaginary;
 
-    private Renderer _renderer;
+    public float baseHue;
+    public Vector3 baseScale;
+    public Renderer renderer;
 
-    public Complex amplitude = Complex.One;
+    public Complex Amplitude = Complex.One;
 
     private void Awake()
     {
-        _renderer = GetComponentInChildren<Renderer>();
-        Color.RGBToHSV(_renderer.material.color, out var h, out var s, out var v);
-        _baseHue = h;
-        _baseScale = transform.localScale;
+        renderer = GetComponentInChildren<Renderer>();
+        baseScale = transform.localScale;
     }
 
     public void Set(int newStateCurrent, int newStatePrevious, Complex newAmplitude)
     {
         stateCurrent = newStateCurrent;
         statePrevious = newStatePrevious;
-        amplitude = newAmplitude;
+        Amplitude = newAmplitude;
 
-        var hue = _baseHue + (float)amplitude.Phase / (2 * Mathf.PI);
-        _renderer.material.color = Color.HSVToRGB(hue - Mathf.FloorToInt(hue), 1, 1);
-        transform.localScale = _baseScale * (float)amplitude.Magnitude;
+        var hue = baseHue + (float)Amplitude.Phase / (2 * Mathf.PI);
+        renderer.material.color = Color.HSVToRGB(hue - Mathf.FloorToInt(hue), 1, 1);
+        transform.localScale = baseScale * (float)Amplitude.Magnitude;
+
+        debugReal = (float)Amplitude.Real;
+        debugImaginary = (float)Amplitude.Imaginary;
     }
 }

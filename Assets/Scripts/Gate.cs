@@ -1,11 +1,21 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+
+[Serializable]
+public enum GateType
+{
+    X,
+    Z,
+    H
+}
 
 public class Gate : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public Image image;
     public Transform slot;
+    public GateType type;
 
     public void OnBeginDrag(PointerEventData eventData)
     {

@@ -91,6 +91,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 8921653508546975789}
   slot: {fileID: 0}
+  type: 0
 --- !u!1 &8236511048226768764
 GameObject:
   m_ObjectHideFlags: 0
