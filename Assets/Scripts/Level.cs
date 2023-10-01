@@ -20,13 +20,18 @@ public class Level : MonoBehaviour
 
     public Transform pegParent;
     public GameObject pegPrefab;
+    public GameObject pegPrefabX;
+    public GameObject pegPrefabZ;
+    public GameObject pegPrefabH;
 
     public State statePrefab;
     public float spawnRate = 1;
     public int updateAfterFrames = 2;
+    public ScrollRect scrollRect;
 
     public string[] dimensionsAlphabet;
     public Color[] dimensionsColors;
+    public bool scrollRectChanged;
 
     public Gate[,] gateGrid;
     public (int, int) prevScreenSize;
@@ -64,6 +69,8 @@ public class Level : MonoBehaviour
         }
 
         StartCoroutine(SpawnCoroutine());
+
+        scrollRect.onValueChanged.AddListener(_ => scrollRectChanged = true);
     }
 
     private void Update()
@@ -77,9 +84,11 @@ public class Level : MonoBehaviour
 
         var newScreenSize = (Screen.width, Screen.height);
 
-        if (SequenceEquals(newGateGrid, gateGrid) && newScreenSize == prevScreenSize && updateAfterFrames != 0) return;
+        if (SequenceEquals(newGateGrid, gateGrid) && newScreenSize == prevScreenSize && updateAfterFrames != 0 &&
+            !scrollRectChanged) return;
         gateGrid = newGateGrid;
         prevScreenSize = newScreenSize;
+        scrollRectChanged = false;
 
         if (pegParent != null) Destroy(pegParent.gameObject);
         pegParent = new GameObject("Peg Parent").transform;
@@ -87,13 +96,36 @@ public class Level : MonoBehaviour
 
         for (var j = 0; j < numRows; j++)
         {
-            var anyGate = Enumerable.Range(0, numBits).Any(i => gateGrid[i, j] != null);
-            // There is at least one gate in this row
-            // if (anyGate)
-            for (var i = 0; i < bucketsParent.childCount; i++)
+            var gates = Enumerable.Range(0, numBits).Select(i => gateGrid[i, j]).ToList();
+            for (var i = 0; i < 1 << numBits; i++)
             {
                 var newPeg = Instantiate(pegPrefab, pegParent);
                 newPeg.transform.position = PegPos(i, j);
+
+                if (gates.Any(g => g != null && g.type == GateType.X))
+                {
+                    var newPegX = Instantiate(pegPrefabX, pegParent);
+                    newPegX.transform.position = PegPos(i, j);
+                    var i2 = i;
+                    for (var k = 0; k < numBits; k++)
+                        if (gates[k] != null && gates[k].type == GateType.X)
+                            i2 ^= 1 << k;
+
+                    if (i2 < i) newPegX.transform.localScale *= new Vector2(-1, 1);
+                }
+
+                if (gates.Select((g, k) => (g, k))
+                        .Count(x => x.g != null && x.g.type == GateType.Z && (i & (1 << x.k)) != 0) % 2 == 1)
+                {
+                    var newPegZ = Instantiate(pegPrefabZ, pegParent);
+                    newPegZ.transform.position = PegPos(i, j);
+                }
+
+                if (gates.Any(g => g != null && g.type == GateType.H))
+                {
+                    var newPegH = Instantiate(pegPrefabH, pegParent);
+                    newPegH.transform.position = PegPos(i, j);
+                }
             }
         }
     }
