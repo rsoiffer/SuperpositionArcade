@@ -25,6 +25,7 @@ public class Gate : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         {
             var copy = Instantiate(gameObject, transform.parent);
             copy.transform.SetSiblingIndex(transform.GetSiblingIndex());
+            slot = null;
         }
 
         transform.SetParent(transform.root);
@@ -40,6 +41,12 @@ public class Gate : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (slot == null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         transform.SetParent(slot);
         transform.localPosition = Vector3.zero;
         image.raycastTarget = true;

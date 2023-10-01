@@ -50,6 +50,8 @@ public class State : MonoBehaviour
                                 throw new ArgumentOutOfRangeException();
                         }
                 }
+            else
+                Destroy(gameObject);
         }
 
         var timeFrac = time - Mathf.FloorToInt(time);

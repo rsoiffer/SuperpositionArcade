@@ -20,6 +20,7 @@ public class Quball : MonoBehaviour
     {
         renderer = GetComponentInChildren<Renderer>();
         baseScale = transform.localScale;
+        Set(stateCurrent, statePrevious, Amplitude);
     }
 
     public void Set(int newStateCurrent, int newStatePrevious, Complex newAmplitude)
