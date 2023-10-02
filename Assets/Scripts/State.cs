@@ -26,36 +26,7 @@ public class State : MonoBehaviour
 
         if (Mathf.FloorToInt(time + collapsePreempt) > Mathf.FloorToInt(timePrev + collapsePreempt)) Collapse();
 
-        if (Mathf.FloorToInt(time) > Mathf.FloorToInt(timePrev))
-        {
-            foreach (var q in quballs) q.Step();
-
-            var rowId = Mathf.FloorToInt(time) - 1;
-            if (rowId < level.numRows)
-            {
-                var gates = level.Gates(rowId);
-                for (var dim = 0; dim < level.NumBits; dim++)
-                    if (gates[dim] != null)
-                        switch (gates[dim].type)
-                        {
-                            case GateType.X:
-                                GateX(dim);
-                                break;
-                            case GateType.Z:
-                                GateZ(dim);
-                                break;
-                            case GateType.H:
-                                GateH(dim);
-                                break;
-                            default:
-                                throw new ArgumentOutOfRangeException();
-                        }
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
-        }
+        if (Mathf.FloorToInt(time) > Mathf.FloorToInt(timePrev)) Step();
     }
 
     private void LateUpdate()
@@ -108,6 +79,38 @@ public class State : MonoBehaviour
         }
 
         quballs.RemoveAll(q => q == null);
+    }
+
+    public void Step()
+    {
+        foreach (var q in quballs) q.Step();
+
+        var rowId = Mathf.FloorToInt(time) - 1;
+        if (rowId < level.numRows)
+        {
+            var gates = level.Gates(rowId);
+            for (var dim = 0; dim < level.NumBits; dim++)
+                if (gates[dim] != null)
+                    switch (gates[dim].type)
+                    {
+                        case GateType.X:
+                            GateX(dim);
+                            break;
+                        case GateType.Z:
+                            GateZ(dim);
+                            break;
+                        case GateType.H:
+                            GateH(dim);
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+        }
+        else
+        {
+            level.StateHitBottom(this);
+            Destroy(gameObject);
+        }
     }
 
     public void GateX(int dim)

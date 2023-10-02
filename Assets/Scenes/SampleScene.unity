@@ -1339,9 +1339,9 @@ MonoBehaviour:
   def: {fileID: 1418918996}
   numRows: 4
   bucketsParent: {fileID: 539504116}
-  bucketYesPrefab: {fileID: 5954613784015183681, guid: ce030ff33297225459d7f4a36d4a4b65,
+  bucketYesPrefab: {fileID: 3997175638177723116, guid: ce030ff33297225459d7f4a36d4a4b65,
     type: 3}
-  bucketNoPrefab: {fileID: 316779880631593048, guid: 8d345f30fcc21074984cc4872883cb92,
+  bucketNoPrefab: {fileID: 7043267249653302773, guid: 8d345f30fcc21074984cc4872883cb92,
     type: 3}
   commandGrid: {fileID: 594033275}
   columnLabelPrefab: {fileID: 1095650316914563291, guid: b1fb6759453fbfc4f813cf430a657994,
@@ -1374,6 +1374,9 @@ MonoBehaviour:
   spawnRate: 1
   updateAfterFrames: 2
   scrollRect: {fileID: 1924935759}
+  victoryProgress: 0
+  victoryThreshold: 100
+  wrongMultiplier: 100
 --- !u!4 &639885579
 Transform:
   m_ObjectHideFlags: 0

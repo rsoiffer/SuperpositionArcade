@@ -13,8 +13,8 @@ public class Level : MonoBehaviour
     public int numRows = 2;
 
     [Header("Buckets")] public Transform bucketsParent;
-    public GameObject bucketYesPrefab;
-    public GameObject bucketNoPrefab;
+    public Bucket bucketYesPrefab;
+    public Bucket bucketNoPrefab;
 
     [Header("Gate Slots")] public GridLayoutGroup commandGrid;
     public GameObject columnLabelPrefab;
@@ -34,12 +34,18 @@ public class Level : MonoBehaviour
     [Header("UI Fixes")] public int updateAfterFrames = 2;
     public ScrollRect scrollRect;
 
+    [Header("Victory")] public float victoryProgress;
+    public float victoryThreshold = 100;
+    public float wrongMultiplier = 100;
+
     private Gate[,] gateGrid;
     private (int, int) prevScreenSize;
     private bool scrollRectChanged;
     private GateSlot[,] slotGrid;
 
     public int NumBits => def.numBits;
+
+    public float VictoryPercent => Mathf.Clamp01(victoryProgress / victoryThreshold);
 
     private void Start()
     {
@@ -48,12 +54,12 @@ public class Level : MonoBehaviour
         for (var state = 0; state < 1 << NumBits; state++)
         {
             var bucket = Instantiate(state == def.goalState ? bucketYesPrefab : bucketNoPrefab, bucketsParent);
-            var tmp = bucket.GetComponentInChildren<TextMeshProUGUI>();
+            bucket.level = this;
             var stateChars = Convert.ToString(state, 2).PadLeft(NumBits, '0').ToCharArray();
             Array.Reverse(stateChars);
             var stateText = string.Join("",
                 stateChars.Select((c, idx) => $"<color={ToRGBHex(dimensionsColors[idx])}>{c}</color>"));
-            tmp.text = $"|{stateText}}}";
+            bucket.tmp.text = $"|{stateText}}}";
         }
 
         commandGrid.constraintCount = NumBits;
@@ -142,6 +148,13 @@ public class Level : MonoBehaviour
             newState.level = this;
             newState.ResetToState(def.startState);
         }
+    }
+
+    public void StateHitBottom(State state)
+    {
+        var fidelity = state.quballs.Sum(q => q.stateCurrent == def.goalState ? (float)q.Amplitude.Magnitude : 0);
+        victoryProgress += fidelity - (1 - fidelity) * wrongMultiplier;
+        victoryProgress = Mathf.Clamp(victoryProgress, 0, victoryThreshold);
     }
 
     public List<Gate> Gates(int row)
