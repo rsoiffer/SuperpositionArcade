@@ -9,11 +9,12 @@ using Object = UnityEngine.Object;
 
 public class Level : MonoBehaviour
 {
-    [Header("General")] public int numBits;
+    [Header("General")] public LevelDefinition def;
     public int numRows = 2;
 
     [Header("Buckets")] public Transform bucketsParent;
-    public GameObject bucketPrefab;
+    public GameObject bucketYesPrefab;
+    public GameObject bucketNoPrefab;
 
     [Header("Gate Slots")] public GridLayoutGroup commandGrid;
     public GameObject columnLabelPrefab;
@@ -38,34 +39,36 @@ public class Level : MonoBehaviour
     private bool scrollRectChanged;
     private GateSlot[,] slotGrid;
 
+    public int NumBits => def.numBits;
+
     private void Start()
     {
-        slotGrid = new GateSlot[numBits, numRows];
+        slotGrid = new GateSlot[NumBits, numRows];
 
-        for (var i = 0; i < 1 << numBits; i++)
+        for (var state = 0; state < 1 << NumBits; state++)
         {
-            var bucket = Instantiate(bucketPrefab, bucketsParent);
+            var bucket = Instantiate(state == def.goalState ? bucketYesPrefab : bucketNoPrefab, bucketsParent);
             var tmp = bucket.GetComponentInChildren<TextMeshProUGUI>();
-            var stateChars = Convert.ToString(i, 2).PadLeft(numBits, '0').ToCharArray();
+            var stateChars = Convert.ToString(state, 2).PadLeft(NumBits, '0').ToCharArray();
             Array.Reverse(stateChars);
             var stateText = string.Join("",
                 stateChars.Select((c, idx) => $"<color={ToRGBHex(dimensionsColors[idx])}>{c}</color>"));
             tmp.text = $"|{stateText}}}";
         }
 
-        commandGrid.constraintCount = numBits;
-        for (var i = 0; i < numBits; i++)
+        commandGrid.constraintCount = NumBits;
+        for (var dim = 0; dim < NumBits; dim++)
         {
             var columnLabel = Instantiate(columnLabelPrefab, commandGrid.transform);
             var tmp = columnLabel.GetComponentInChildren<TextMeshProUGUI>();
-            tmp.text = $"<color={ToRGBHex(dimensionsColors[i])}>{dimensionsAlphabet[i]}</color>";
+            tmp.text = $"<color={ToRGBHex(dimensionsColors[dim])}>{dimensionsAlphabet[dim]}</color>";
         }
 
-        for (var j = 0; j < numRows; j++)
-        for (var i = 0; i < numBits; i++)
+        for (var row = 0; row < numRows; row++)
+        for (var dim = 0; dim < NumBits; dim++)
         {
             var newGateSlow = Instantiate(gateSlotPrefab, commandGrid.transform);
-            slotGrid[i, j] = newGateSlow;
+            slotGrid[dim, row] = newGateSlow;
         }
 
         StartCoroutine(SpawnCoroutine());
@@ -77,10 +80,10 @@ public class Level : MonoBehaviour
     {
         updateAfterFrames -= 1;
 
-        var newGateGrid = new Gate[numBits, numRows];
-        for (var i = 0; i < numBits; i++)
-        for (var j = 0; j < numRows; j++)
-            newGateGrid[i, j] = slotGrid[i, j].GetComponentInChildren<Gate>();
+        var newGateGrid = new Gate[NumBits, numRows];
+        for (var dim = 0; dim < NumBits; dim++)
+        for (var row = 0; row < numRows; row++)
+            newGateGrid[dim, row] = slotGrid[dim, row].GetComponentInChildren<Gate>();
 
         var newScreenSize = (Screen.width, Screen.height);
 
@@ -94,37 +97,37 @@ public class Level : MonoBehaviour
         pegParent = new GameObject("Peg Parent").transform;
         pegParent.SetParent(transform);
 
-        for (var j = 0; j < numRows; j++)
+        for (var row = 0; row < numRows; row++)
         {
-            var gates = Gates(j);
-            for (var i = 0; i < 1 << numBits; i++)
+            var gates = Gates(row);
+            for (var state = 0; state < 1 << NumBits; state++)
             {
                 var newPeg = Instantiate(pegPrefab, pegParent);
-                newPeg.transform.position = PegPos(i, j);
+                newPeg.transform.position = PegPos(state, row);
 
                 if (gates.Any(g => g != null && g.type == GateType.X))
                 {
                     var newPegX = Instantiate(pegPrefabX, pegParent);
-                    newPegX.transform.position = PegPos(i, j);
-                    var i2 = i;
-                    for (var k = 0; k < numBits; k++)
+                    newPegX.transform.position = PegPos(state, row);
+                    var i2 = state;
+                    for (var k = 0; k < NumBits; k++)
                         if (gates[k] != null && gates[k].type == GateType.X)
                             i2 ^= 1 << k;
 
-                    if (i2 < i) newPegX.transform.localScale *= new Vector2(-1, 1);
+                    if (i2 < state) newPegX.transform.localScale *= new Vector2(-1, 1);
                 }
 
                 if (gates.Select((g, k) => (g, k))
-                        .Count(x => x.g != null && x.g.type == GateType.Z && (i & (1 << x.k)) != 0) % 2 == 1)
+                        .Count(x => x.g != null && x.g.type == GateType.Z && (state & (1 << x.k)) != 0) % 2 == 1)
                 {
                     var newPegZ = Instantiate(pegPrefabZ, pegParent);
-                    newPegZ.transform.position = PegPos(i, j);
+                    newPegZ.transform.position = PegPos(state, row);
                 }
 
                 if (gates.Any(g => g != null && g.type == GateType.H))
                 {
                     var newPegH = Instantiate(pegPrefabH, pegParent);
-                    newPegH.transform.position = PegPos(i, j);
+                    newPegH.transform.position = PegPos(state, row);
                 }
             }
         }
@@ -137,12 +140,13 @@ public class Level : MonoBehaviour
             yield return new WaitForSeconds(1 / spawnRate);
             var newState = Instantiate(statePrefab);
             newState.level = this;
+            newState.ResetToState(def.startState);
         }
     }
 
     public List<Gate> Gates(int row)
     {
-        return Enumerable.Range(0, numBits).Select(i => gateGrid[i, row]).ToList();
+        return Enumerable.Range(0, NumBits).Select(dim => gateGrid[dim, row]).ToList();
     }
 
     public Vector3 PegPos(int state, int row)

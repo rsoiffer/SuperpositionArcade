@@ -17,11 +17,6 @@ public class State : MonoBehaviour
     public float time;
     public List<Quball> quballs;
 
-    private void Start()
-    {
-        foreach (var q in quballs) q.Set(q.stateCurrent, q.Amplitude);
-    }
-
     private void Update()
     {
         quballs.RemoveAll(q => q == null);
@@ -39,18 +34,18 @@ public class State : MonoBehaviour
             if (rowId < level.numRows)
             {
                 var gates = level.Gates(rowId);
-                for (var i = 0; i < level.numBits; i++)
-                    if (gates[i] != null)
-                        switch (gates[i].type)
+                for (var dim = 0; dim < level.NumBits; dim++)
+                    if (gates[dim] != null)
+                        switch (gates[dim].type)
                         {
                             case GateType.X:
-                                GateX(i);
+                                GateX(dim);
                                 break;
                             case GateType.Z:
-                                GateZ(i);
+                                GateZ(dim);
                                 break;
                             case GateType.H:
-                                GateH(i);
+                                GateH(dim);
                                 break;
                             default:
                                 throw new ArgumentOutOfRangeException();
@@ -81,6 +76,17 @@ public class State : MonoBehaviour
         }
     }
 
+    public void ResetToState(int state)
+    {
+        quballs.RemoveAll(q => q == null);
+        foreach (var q in quballs)
+            Destroy(q.gameObject);
+
+        var newQuball = Instantiate(quballPrefab, transform);
+        newQuball.Set(state, Complex.One);
+        quballs.Add(newQuball);
+    }
+
     public void Collapse()
     {
         foreach (var state in quballs.Select(q => q.stateCurrent).ToHashSet())
@@ -104,26 +110,26 @@ public class State : MonoBehaviour
         quballs.RemoveAll(q => q == null);
     }
 
-    public void GateX(int id)
+    public void GateX(int dim)
     {
-        foreach (var q in quballs) q.Set(q.stateCurrent ^ (1 << id), q.Amplitude);
+        foreach (var q in quballs) q.Set(q.stateCurrent ^ (1 << dim), q.Amplitude);
     }
 
-    public void GateZ(int id)
+    public void GateZ(int dim)
     {
         foreach (var q in quballs)
-            q.Set(q.stateCurrent, q.Amplitude * (q.Bit(id) ? -1 : 1));
+            q.Set(q.stateCurrent, q.Amplitude * (q.Bit(dim) ? -1 : 1));
     }
 
-    public void GateH(int id)
+    public void GateH(int dim)
     {
         foreach (var q in quballs.ToList())
         {
             var newQuball = Instantiate(quballPrefab, transform);
             newQuball.Set(q.statePrevious, q.Amplitude / Mathf.Sqrt(2));
-            newQuball.Set(q.stateCurrent ^ (1 << id), q.Amplitude / Mathf.Sqrt(2));
+            newQuball.Set(q.stateCurrent ^ (1 << dim), q.Amplitude / Mathf.Sqrt(2));
             quballs.Add(newQuball);
-            q.Set(q.stateCurrent, (q.Bit(id) ? -1 : 1) * q.Amplitude / Mathf.Sqrt(2));
+            q.Set(q.stateCurrent, (q.Bit(dim) ? -1 : 1) * q.Amplitude / Mathf.Sqrt(2));
         }
     }
 }
