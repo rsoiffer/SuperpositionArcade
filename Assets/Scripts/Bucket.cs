@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 
 public class Bucket : MonoBehaviour
@@ -6,7 +5,6 @@ public class Bucket : MonoBehaviour
     public bool isYes;
     public Level level;
 
-    public TextMeshProUGUI tmp;
     public RectTransform fill;
     public float maxFillHeight;
 
