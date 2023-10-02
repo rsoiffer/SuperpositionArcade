@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &6454645155571506532
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1538031847597037132, guid: 600735dd44b0e7e478f40807c93a0643,
+        type: 3}
+      propertyPath: type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2347019032872262502, guid: 600735dd44b0e7e478f40807c93a0643,
+        type: 3}
+      propertyPath: m_Name
+      value: Gate Z
+      objectReference: {fileID: 0}
+    - target: {fileID: 4627628615169408246, guid: 600735dd44b0e7e478f40807c93a0643,
+        type: 3}
+      propertyPath: m_text
+      value: Z
+      objectReference: {fileID: 0}
+    - target: {fileID: 5872399255915052386, guid: 600735dd44b0e7e478f40807c93a0643,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5872399255915052386, guid: 600735dd44b0e7e478f40807c93a0643,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5872399255915052386, guid: 600735dd44b0e7e478f40807c93a0643,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5872399255915052386, guid: 600735dd44b0e7e478f40807c93a0643,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5872399255915052386, guid: 600735dd44b0e7e478f40807c93a0643,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 600735dd44b0e7e478f40807c93a0643, type: 3}

@@ -16,9 +16,11 @@ public class Gate : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     public Image image;
     public Transform slot;
     public GateType type;
+    public bool isDraggable = true;
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (!isDraggable) return;
         slot = transform.parent;
         var gateSlot = slot.GetComponentInParent<GateSlot>();
         if (gateSlot != null && gateSlot.infiniteSource)
@@ -35,12 +37,14 @@ public class Gate : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (!isDraggable) return;
         // transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         transform.position = Input.mousePosition;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (!isDraggable) return;
         if (slot == null)
         {
             Destroy(gameObject);

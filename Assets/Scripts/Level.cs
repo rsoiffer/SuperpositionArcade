@@ -21,6 +21,7 @@ public class Level : MonoBehaviour
     public GateSlot gateSlotPrefab;
     public string[] dimensionsAlphabet;
     public Color[] dimensionsColors;
+    public GridLayoutGroup sourceGrid;
 
     [Header("Pegs")] public Transform pegParent;
     public GameObject pegPrefab;
@@ -76,6 +77,26 @@ public class Level : MonoBehaviour
             var newGateSlow = Instantiate(gateSlotPrefab, commandGrid.transform);
             slotGrid[dim, row] = newGateSlow;
         }
+
+        for (var i = 0; i < def.gatesBefore.Count; i++)
+        {
+            var gateSlot = commandGrid.transform.GetChild(i);
+            gateSlot.GetComponent<GateSlot>().acceptsGateDrops = false;
+            if (def.gatesBefore[i] == null) continue;
+            var newGate = Instantiate(def.gatesBefore[i], gateSlot);
+            newGate.isDraggable = false;
+        }
+
+        for (var i = 0; i < def.gatesAfter.Count; i++)
+        {
+            var gateSlot = commandGrid.transform.GetChild(commandGrid.transform.childCount - 1 - i);
+            gateSlot.GetComponent<GateSlot>().acceptsGateDrops = false;
+            if (def.gatesAfter[i] == null) continue;
+            var newGate = Instantiate(def.gatesAfter[i], gateSlot);
+            newGate.isDraggable = false;
+        }
+
+        foreach (var gate in def.gatesPlaceable) Instantiate(gate, sourceGrid.transform);
 
         StartCoroutine(SpawnCoroutine());
 

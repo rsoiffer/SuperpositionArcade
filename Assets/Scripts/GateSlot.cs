@@ -4,9 +4,11 @@ using UnityEngine.EventSystems;
 public class GateSlot : MonoBehaviour, IDropHandler
 {
     public bool infiniteSource;
+    public bool acceptsGateDrops = true;
 
     public void OnDrop(PointerEventData eventData)
     {
+        if (!acceptsGateDrops) return;
         if (!infiniteSource && GetComponentInChildren<Gate>() != null) return;
         var dropped = eventData.pointerDrag;
         var gate = dropped.GetComponent<Gate>();
