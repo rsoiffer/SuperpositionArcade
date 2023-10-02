@@ -8,7 +8,6 @@ using Vector3 = UnityEngine.Vector3;
 public class State : MonoBehaviour
 {
     public Quball quballPrefab;
-    public float timeScale = 1;
     public AnimationCurve bounceCurve;
     public AnimationCurve bounceCurveSide;
     public Level level;
@@ -22,7 +21,7 @@ public class State : MonoBehaviour
         quballs.RemoveAll(q => q == null);
 
         var timePrev = time;
-        time += timeScale * Time.deltaTime;
+        time += level.timeScale * Time.deltaTime;
 
         if (Mathf.FloorToInt(time + collapsePreempt) > Mathf.FloorToInt(timePrev + collapsePreempt)) Collapse();
 

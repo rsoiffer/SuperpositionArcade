@@ -27,10 +27,11 @@ public class Level : MonoBehaviour
 
     [Header("Pegs")] public GridLayoutGroup pegGridParent;
     public GameObject pegEmptyPrefab;
-    public GameObject pegPrefab;
+    public Peg pegPrefab;
 
     [Header("States")] public State statePrefab;
     public float spawnRate = 1;
+    public float timeScale = 1;
 
     [Header("UI Fixes")] public int updateAfterFrames = 2;
     public ScrollRect scrollRect;
@@ -40,7 +41,7 @@ public class Level : MonoBehaviour
     public float wrongMultiplier = 100;
 
     private Gate[,] gateGrid;
-    private GameObject[,] pegGrid;
+    private Peg[,] pegGrid;
     private (int, int) prevScreenSize;
     private bool scrollRectChanged;
     private GateSlot[,] slotGrid;
@@ -52,7 +53,7 @@ public class Level : MonoBehaviour
     private void Start()
     {
         slotGrid = new GateSlot[NumBits, numRows];
-        pegGrid = new GameObject[1 << NumBits, numRows];
+        pegGrid = new Peg[1 << NumBits, numRows];
 
         for (var state = 0; state < 1 << NumBits; state++)
         {
@@ -103,12 +104,15 @@ public class Level : MonoBehaviour
         foreach (var gate in def.gatesPlaceable) Instantiate(gate, sourceGrid.transform);
 
         pegGridParent.constraintCount = 1 << NumBits;
-        for (var row = -1; row < numRows; row++)
+        for (var state = 0; state < 1 << NumBits; state++) Instantiate(pegEmptyPrefab, pegGridParent.transform);
+        for (var row = 0; row < numRows; row++)
         for (var state = 0; state < 1 << NumBits; state++)
         {
-            var newPeg = Instantiate(row < 0 ? pegEmptyPrefab : pegPrefab, pegGridParent.transform);
-            if (row >= 0)
-                pegGrid[state, row] = newPeg;
+            var newPeg = Instantiate(pegPrefab, pegGridParent.transform);
+            pegGrid[state, row] = newPeg;
+            newPeg.state = state;
+            newPeg.row = row;
+            newPeg.level = this;
         }
 
         StartCoroutine(SpawnCoroutine());
@@ -134,39 +138,8 @@ public class Level : MonoBehaviour
         scrollRectChanged = false;
 
         for (var row = 0; row < numRows; row++)
-        {
-            var gates = Gates(row);
-            for (var state = 0; state < 1 << NumBits; state++)
-            {
-                /*var newPeg = Instantiate(pegPrefab, pegParent);
-                newPeg.transform.position = PegPos(state, row);
-
-                if (gates.Any(g => g != null && g.type == GateType.X))
-                {
-                    var newPegX = Instantiate(pegPrefabX, pegParent);
-                    newPegX.transform.position = PegPos(state, row);
-                    var i2 = state;
-                    for (var k = 0; k < NumBits; k++)
-                        if (gates[k] != null && gates[k].type == GateType.X)
-                            i2 ^= 1 << k;
-
-                    if (i2 < state) newPegX.transform.localScale *= new Vector2(-1, 1);
-                }
-
-                if (gates.Select((g, k) => (g, k))
-                        .Count(x => x.g != null && x.g.type == GateType.Z && (state & (1 << x.k)) != 0) % 2 == 1)
-                {
-                    var newPegZ = Instantiate(pegPrefabZ, pegParent);
-                    newPegZ.transform.position = PegPos(state, row);
-                }
-
-                if (gates.Any(g => g != null && g.type == GateType.H))
-                {
-                    var newPegH = Instantiate(pegPrefabH, pegParent);
-                    newPegH.transform.position = PegPos(state, row);
-                }*/
-            }
-        }
+        for (var state = 0; state < 1 << NumBits; state++)
+            pegGrid[state, row].UpdateGraphics();
     }
 
     private IEnumerator SpawnCoroutine()
