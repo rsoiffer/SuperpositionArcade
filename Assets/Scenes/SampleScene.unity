@@ -1282,14 +1282,10 @@ MonoBehaviour:
   - {r: 0.34961888, g: 1, b: 0.1830188, a: 0}
   - {r: 0.8563744, g: 1, b: 0.22075468, a: 0}
   sourceGrid: {fileID: 1577205846}
-  pegParent: {fileID: 402418647}
-  pegPrefab: {fileID: 610401608720176883, guid: ca270a6539970ca4eaab1bc355aa3a7b,
+  pegGridParent: {fileID: 1015143137}
+  pegEmptyPrefab: {fileID: 6204532239702716972, guid: 46fe6d40d2a07a14194fb351ceabc18d,
     type: 3}
-  pegPrefabX: {fileID: 6863163596001828770, guid: 56bddebe7bb6afc4fad233185a69d056,
-    type: 3}
-  pegPrefabZ: {fileID: 4239218251889977757, guid: 17560c147ff3cb045a10177ccfedc2e1,
-    type: 3}
-  pegPrefabH: {fileID: 1154415060234760345, guid: b64317a2e8a6c1e4589a620003b0aa7b,
+  pegPrefab: {fileID: 6204532239702716972, guid: 0e3d07b314c00b246aeb76e921bd20c2,
     type: 3}
   statePrefab: {fileID: 7089078236139258751, guid: 1dc8d932fd7f9a94f9e9e0ff642b1ce1,
     type: 3}
@@ -1753,6 +1749,7 @@ GameObject:
   - component: {fileID: 1015143139}
   - component: {fileID: 1015143138}
   - component: {fileID: 1015143137}
+  - component: {fileID: 1015143140}
   - component: {fileID: 1015143136}
   m_Layer: 5
   m_Name: Pegs Grid
@@ -1777,8 +1774,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 250, y: 0}
+  m_SizeDelta: {x: 1081, y: 0}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1015143136
 MonoBehaviour:
@@ -1821,9 +1818,9 @@ MonoBehaviour:
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 64, y: 64}
-  m_Spacing: {x: 10, y: 20}
+  m_Spacing: {x: 20, y: 20}
   m_Constraint: 1
-  m_ConstraintCount: 3
+  m_ConstraintCount: 4
 --- !u!114 &1015143138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1862,6 +1859,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1015143134}
   m_CullTransparentMesh: 1
+--- !u!114 &1015143140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1015143134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 2
 --- !u!1 &1077001501
 GameObject:
   m_ObjectHideFlags: 0
@@ -1973,8 +1984,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 619.24994, y: 0}
-  m_SizeDelta: {x: 1238.4999, y: 0}
+  m_AnchoredPosition: {x: 665.5, y: 0}
+  m_SizeDelta: {x: 1331, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1082932797
 MonoBehaviour:
