@@ -25,11 +25,9 @@ public class Level : MonoBehaviour
     public Color[] dimensionsColors;
     public GridLayoutGroup sourceGrid;
 
-    [Header("Pegs")] public Transform pegParent;
+    [Header("Pegs")] public GridLayoutGroup pegGridParent;
+    public GameObject pegEmptyPrefab;
     public GameObject pegPrefab;
-    public GameObject pegPrefabX;
-    public GameObject pegPrefabZ;
-    public GameObject pegPrefabH;
 
     [Header("States")] public State statePrefab;
     public float spawnRate = 1;
@@ -42,6 +40,7 @@ public class Level : MonoBehaviour
     public float wrongMultiplier = 100;
 
     private Gate[,] gateGrid;
+    private GameObject[,] pegGrid;
     private (int, int) prevScreenSize;
     private bool scrollRectChanged;
     private GateSlot[,] slotGrid;
@@ -53,6 +52,7 @@ public class Level : MonoBehaviour
     private void Start()
     {
         slotGrid = new GateSlot[NumBits, numRows];
+        pegGrid = new GameObject[1 << NumBits, numRows];
 
         for (var state = 0; state < 1 << NumBits; state++)
         {
@@ -78,8 +78,8 @@ public class Level : MonoBehaviour
         for (var row = 0; row < numRows; row++)
         for (var dim = 0; dim < NumBits; dim++)
         {
-            var newGateSlow = Instantiate(gateSlotPrefab, commandGrid.transform);
-            slotGrid[dim, row] = newGateSlow;
+            var newGateSlot = Instantiate(gateSlotPrefab, commandGrid.transform);
+            slotGrid[dim, row] = newGateSlot;
         }
 
         for (var i = 0; i < def.gatesBefore.Count; i++)
@@ -101,6 +101,15 @@ public class Level : MonoBehaviour
         }
 
         foreach (var gate in def.gatesPlaceable) Instantiate(gate, sourceGrid.transform);
+
+        pegGridParent.constraintCount = 1 << NumBits;
+        for (var row = -1; row < numRows; row++)
+        for (var state = 0; state < 1 << NumBits; state++)
+        {
+            var newPeg = Instantiate(row < 0 ? pegEmptyPrefab : pegPrefab, pegGridParent.transform);
+            if (row >= 0)
+                pegGrid[state, row] = newPeg;
+        }
 
         StartCoroutine(SpawnCoroutine());
 
@@ -124,16 +133,12 @@ public class Level : MonoBehaviour
         prevScreenSize = newScreenSize;
         scrollRectChanged = false;
 
-        if (pegParent != null) Destroy(pegParent.gameObject);
-        pegParent = new GameObject("Peg Parent").transform;
-        pegParent.SetParent(transform);
-
         for (var row = 0; row < numRows; row++)
         {
             var gates = Gates(row);
             for (var state = 0; state < 1 << NumBits; state++)
             {
-                var newPeg = Instantiate(pegPrefab, pegParent);
+                /*var newPeg = Instantiate(pegPrefab, pegParent);
                 newPeg.transform.position = PegPos(state, row);
 
                 if (gates.Any(g => g != null && g.type == GateType.X))
@@ -159,7 +164,7 @@ public class Level : MonoBehaviour
                 {
                     var newPegH = Instantiate(pegPrefabH, pegParent);
                     newPegH.transform.position = PegPos(state, row);
-                }
+                }*/
             }
         }
     }
