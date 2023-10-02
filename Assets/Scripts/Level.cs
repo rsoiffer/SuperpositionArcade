@@ -15,7 +15,7 @@ public class Level : MonoBehaviour
     [Header("Buckets")] public Transform bucketsParent;
     public Bucket bucketYesPrefab;
     public Bucket bucketNoPrefab;
-    public Transform bucketTextParent;
+    public List<Transform> bucketTextParents;
     public TextMeshProUGUI bucketTextPrefab;
 
     [Header("Gate Slots")] public GridLayoutGroup commandGrid;
@@ -60,12 +60,15 @@ public class Level : MonoBehaviour
             var bucket = Instantiate(state == def.goalState ? bucketYesPrefab : bucketNoPrefab, bucketsParent);
             bucket.level = this;
 
-            var bucketText = Instantiate(bucketTextPrefab, bucketTextParent);
-            var stateChars = Convert.ToString(state, 2).PadLeft(NumBits, '0').ToCharArray();
-            Array.Reverse(stateChars);
-            var stateText = string.Join("",
-                stateChars.Select((c, idx) => $"<color={ToRGBHex(dimensionsColors[idx])}>{c}</color>"));
-            bucketText.text = $"|{stateText}}}";
+            foreach (var bucketTextParent in bucketTextParents)
+            {
+                var bucketText = Instantiate(bucketTextPrefab, bucketTextParent);
+                var stateChars = Convert.ToString(state, 2).PadLeft(NumBits, '0').ToCharArray();
+                Array.Reverse(stateChars);
+                var stateText = string.Join("",
+                    stateChars.Select((c, idx) => $"<color={ToRGBHex(dimensionsColors[idx])}>{c}</color>"));
+                bucketText.text = $"|{stateText}}}";
+            }
         }
 
         commandGrid.constraintCount = NumBits;
@@ -85,7 +88,7 @@ public class Level : MonoBehaviour
 
         for (var i = 0; i < def.gatesBefore.Count; i++)
         {
-            var gateSlot = commandGrid.transform.GetChild(i);
+            var gateSlot = commandGrid.transform.GetChild(NumBits + i);
             gateSlot.GetComponent<GateSlot>().BlockDragging();
             if (def.gatesBefore[i] == null) continue;
             var newGate = Instantiate(def.gatesBefore[i], gateSlot);

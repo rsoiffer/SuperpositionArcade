@@ -46,19 +46,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quballPrefab: {fileID: -5797438902204874076, guid: c20831e0d30b5d1409dcad52ba8df3f4,
     type: 3}
-  timeScale: 1
   bounceCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0.0013427734
-      inSlope: -1.0362952
-      outSlope: -1.0362952
+      inSlope: -1.5146234
+      outSlope: -1.5146234
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.11304817
+      outWeight: 0.4488031
+    - serializedVersion: 3
+      time: 0.5030172
+      value: 0.0026101768
+      inSlope: 1.0516806
+      outSlope: 1.0516806
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
       value: 1
@@ -77,25 +85,25 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 1.1701195
-      outSlope: 1.1701195
-      tangentMode: 34
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.33333334
+      outWeight: 0
     - serializedVersion: 3
-      time: 0.83117676
-      value: 0.97257614
-      inSlope: 1.1701195
-      outSlope: 1.1701195
-      tangentMode: 34
+      time: 1
+      value: 1
+      inSlope: 0.041886438
+      outSlope: 0.041886438
+      tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0.07135093
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   level: {fileID: 0}
-  collapsePreempt: 0.2
+  collapsePreempt: 0.15
   time: 0
   quballs: []
