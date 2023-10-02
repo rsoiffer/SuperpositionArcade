@@ -23,6 +23,8 @@ public class Quball : MonoBehaviour
     {
         renderer = GetComponentInChildren<Renderer>();
         baseScale = transform.localScale;
+        previousPosNoise = noiseScale * Random.insideUnitCircle;
+        currentPosNoise = noiseScale * Random.insideUnitCircle;
         UpdateGraphics();
     }
 

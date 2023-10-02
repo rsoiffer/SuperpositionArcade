@@ -162,12 +162,19 @@ public class Level : MonoBehaviour
 
     private IEnumerator SpawnCoroutine()
     {
+        var spawnCooldown = 1f;
         while (true)
         {
-            yield return new WaitForSeconds(1 / spawnRate);
-            var newState = Instantiate(statePrefab);
-            newState.level = this;
-            newState.ResetToState(def.startState);
+            spawnCooldown -= Time.deltaTime * spawnRate;
+            if (spawnCooldown < 0)
+            {
+                spawnCooldown = 1;
+                var newState = Instantiate(statePrefab);
+                newState.level = this;
+                newState.ResetToState(def.startState);
+            }
+
+            yield return null;
         }
     }
 
