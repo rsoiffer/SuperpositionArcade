@@ -37,11 +37,11 @@ public class State : MonoBehaviour
 
             var rowId = Mathf.FloorToInt(time) - 1;
             if (rowId < level.numRows)
+            {
+                var gates = level.Gates(rowId);
                 for (var i = 0; i < level.numBits; i++)
-                {
-                    var gate = level.gateGrid[i, rowId];
-                    if (gate != null)
-                        switch (gate.type)
+                    if (gates[i] != null)
+                        switch (gates[i].type)
                         {
                             case GateType.X:
                                 GateX(i);
@@ -55,9 +55,11 @@ public class State : MonoBehaviour
                             default:
                                 throw new ArgumentOutOfRangeException();
                         }
-                }
+            }
             else
+            {
                 Destroy(gameObject);
+            }
         }
     }
 

@@ -1090,7 +1090,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.7490196, g: 0.5764706, b: 0.25490198, a: 1}
+  m_Color: {r: 0.7490196, g: 0.5764706, b: 0.25490198, a: 0.19607843}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1346,6 +1346,18 @@ MonoBehaviour:
     type: 3}
   gateSlotPrefab: {fileID: 7482376406417808791, guid: 9bd8a7d0db0f2df47ba8ab53e4646801,
     type: 3}
+  dimensionsAlphabet:
+  - "\u03B1"
+  - "\u03B2"
+  - "\u03B3"
+  - "\u03B4"
+  - "\u03B5"
+  dimensionsColors:
+  - {r: 0.39999998, g: 0.5599998, b: 1, a: 0}
+  - {r: 0.2980392, g: 0.7471678, b: 1, a: 0}
+  - {r: 0.20392157, g: 1, b: 0.8117647, a: 0}
+  - {r: 0.34961888, g: 1, b: 0.1830188, a: 0}
+  - {r: 0.8563744, g: 1, b: 0.22075468, a: 0}
   pegParent: {fileID: 402418647}
   pegPrefab: {fileID: 610401608720176883, guid: ca270a6539970ca4eaab1bc355aa3a7b,
     type: 3}
@@ -1360,19 +1372,6 @@ MonoBehaviour:
   spawnRate: 1
   updateAfterFrames: 2
   scrollRect: {fileID: 1924935759}
-  dimensionsAlphabet:
-  - "\u03B1"
-  - "\u03B2"
-  - "\u03B3"
-  - "\u03B4"
-  - "\u03B5"
-  dimensionsColors:
-  - {r: 0.39999998, g: 0.5599998, b: 1, a: 0}
-  - {r: 0.2980392, g: 0.7471678, b: 1, a: 0}
-  - {r: 0.20392157, g: 1, b: 0.8117647, a: 0}
-  - {r: 0.34961888, g: 1, b: 0.1830188, a: 0}
-  - {r: 0.8563744, g: 1, b: 0.22075468, a: 0}
-  scrollRectChanged: 0
 --- !u!4 &639885579
 Transform:
   m_ObjectHideFlags: 0
@@ -2792,7 +2791,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1390472481}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.99999994
+  m_Size: 0.9999999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

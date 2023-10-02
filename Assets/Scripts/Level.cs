@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -8,35 +9,34 @@ using Object = UnityEngine.Object;
 
 public class Level : MonoBehaviour
 {
-    public int numBits;
+    [Header("General")] public int numBits;
     public int numRows = 2;
 
-    public Transform bucketsParent;
+    [Header("Buckets")] public Transform bucketsParent;
     public GameObject bucketPrefab;
 
-    public GridLayoutGroup commandGrid;
+    [Header("Gate Slots")] public GridLayoutGroup commandGrid;
     public GameObject columnLabelPrefab;
     public GateSlot gateSlotPrefab;
+    public string[] dimensionsAlphabet;
+    public Color[] dimensionsColors;
 
-    public Transform pegParent;
+    [Header("Pegs")] public Transform pegParent;
     public GameObject pegPrefab;
     public GameObject pegPrefabX;
     public GameObject pegPrefabZ;
     public GameObject pegPrefabH;
 
-    public State statePrefab;
+    [Header("States")] public State statePrefab;
     public float spawnRate = 1;
-    public int updateAfterFrames = 2;
+
+    [Header("UI Fixes")] public int updateAfterFrames = 2;
     public ScrollRect scrollRect;
 
-    public string[] dimensionsAlphabet;
-    public Color[] dimensionsColors;
-    public bool scrollRectChanged;
-
-    public Gate[,] gateGrid;
-    public (int, int) prevScreenSize;
-
-    public GateSlot[,] slotGrid;
+    private Gate[,] gateGrid;
+    private (int, int) prevScreenSize;
+    private bool scrollRectChanged;
+    private GateSlot[,] slotGrid;
 
     private void Start()
     {
@@ -96,7 +96,7 @@ public class Level : MonoBehaviour
 
         for (var j = 0; j < numRows; j++)
         {
-            var gates = Enumerable.Range(0, numBits).Select(i => gateGrid[i, j]).ToList();
+            var gates = Gates(j);
             for (var i = 0; i < 1 << numBits; i++)
             {
                 var newPeg = Instantiate(pegPrefab, pegParent);
@@ -138,6 +138,11 @@ public class Level : MonoBehaviour
             var newState = Instantiate(statePrefab);
             newState.level = this;
         }
+    }
+
+    public List<Gate> Gates(int row)
+    {
+        return Enumerable.Range(0, numBits).Select(i => gateGrid[i, row]).ToList();
     }
 
     public Vector3 PegPos(int state, int row)
