@@ -17,6 +17,13 @@ public class Gate : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     public Transform slot;
     public GateType type;
     public bool isDraggable = true;
+    public Color notDraggableColor;
+
+    public void BlockDragging()
+    {
+        isDraggable = false;
+        image.color = notDraggableColor;
+    }
 
     public void OnBeginDrag(PointerEventData eventData)
     {

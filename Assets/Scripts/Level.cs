@@ -81,19 +81,19 @@ public class Level : MonoBehaviour
         for (var i = 0; i < def.gatesBefore.Count; i++)
         {
             var gateSlot = commandGrid.transform.GetChild(i);
-            gateSlot.GetComponent<GateSlot>().acceptsGateDrops = false;
+            gateSlot.GetComponent<GateSlot>().BlockDragging();
             if (def.gatesBefore[i] == null) continue;
             var newGate = Instantiate(def.gatesBefore[i], gateSlot);
-            newGate.isDraggable = false;
+            newGate.BlockDragging();
         }
 
         for (var i = 0; i < def.gatesAfter.Count; i++)
         {
             var gateSlot = commandGrid.transform.GetChild(commandGrid.transform.childCount - 1 - i);
-            gateSlot.GetComponent<GateSlot>().acceptsGateDrops = false;
+            gateSlot.GetComponent<GateSlot>().BlockDragging();
             if (def.gatesAfter[i] == null) continue;
             var newGate = Instantiate(def.gatesAfter[i], gateSlot);
-            newGate.isDraggable = false;
+            newGate.BlockDragging();
         }
 
         foreach (var gate in def.gatesPlaceable) Instantiate(gate, sourceGrid.transform);

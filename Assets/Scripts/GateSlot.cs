@@ -6,6 +6,15 @@ public class GateSlot : MonoBehaviour, IDropHandler
     public bool infiniteSource;
     public bool acceptsGateDrops = true;
 
+    public void BlockDragging()
+    {
+        acceptsGateDrops = false;
+        foreach (Transform t in transform)
+        {
+            t.gameObject.SetActive(false);
+        }
+    }
+
     public void OnDrop(PointerEventData eventData)
     {
         if (!acceptsGateDrops) return;
