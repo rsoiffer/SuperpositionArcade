@@ -22,6 +22,12 @@ public class Peg : MonoBehaviour
         imageZ.gameObject.SetActive(false);
         imageH.gameObject.SetActive(false);
 
+        if (!level.CheckControls(state, row))
+        {
+            imageBase.gameObject.SetActive(true);
+            return;
+        }
+
         if (gates.Any(g => g != null && g.type == GateType.H))
         {
             imageH.gameObject.SetActive(true);

@@ -85,22 +85,24 @@ public class State : MonoBehaviour
     {
         foreach (var q in quballs) q.Step();
 
-        var rowId = Mathf.FloorToInt(time) - 1;
-        if (rowId < level.numRows)
+        var row = Mathf.FloorToInt(time) - 1;
+        if (row < level.numRows)
         {
-            var gates = level.Gates(rowId);
+            var gates = level.Gates(row);
             for (var dim = 0; dim < level.NumBits; dim++)
                 if (gates[dim] != null)
                     switch (gates[dim].type)
                     {
                         case GateType.X:
-                            GateX(dim);
+                            GateX(dim, row);
                             break;
                         case GateType.Z:
-                            GateZ(dim);
+                            GateZ(dim, row);
                             break;
                         case GateType.H:
-                            GateH(dim);
+                            GateH(dim, row);
+                            break;
+                        case GateType.Control:
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
@@ -114,21 +116,25 @@ public class State : MonoBehaviour
         }
     }
 
-    public void GateX(int dim)
-    {
-        foreach (var q in quballs) q.Set(q.stateCurrent ^ (1 << dim), q.Amplitude);
-    }
-
-    public void GateZ(int dim)
+    public void GateX(int dim, int row)
     {
         foreach (var q in quballs)
-            q.Set(q.stateCurrent, q.Amplitude * (q.Bit(dim) ? -1 : 1));
+            if (level.CheckControls(q.stateCurrent, row))
+                q.Set(q.stateCurrent ^ (1 << dim), q.Amplitude);
     }
 
-    public void GateH(int dim)
+    public void GateZ(int dim, int row)
+    {
+        foreach (var q in quballs)
+            if (level.CheckControls(q.stateCurrent, row))
+                q.Set(q.stateCurrent, q.Amplitude * (q.Bit(dim) ? -1 : 1));
+    }
+
+    public void GateH(int dim, int row)
     {
         foreach (var q in quballs.ToList())
         {
+            if (!level.CheckControls(q.stateCurrent, row)) continue;
             var newQuball = Instantiate(quballPrefab, transform);
             newQuball.Set(q.statePrevious, q.Amplitude / Mathf.Sqrt(2));
             newQuball.Set(q.stateCurrent ^ (1 << dim), q.Amplitude / Mathf.Sqrt(2));

@@ -8,7 +8,8 @@ public enum GateType
 {
     X,
     Z,
-    H
+    H,
+    Control
 }
 
 public class Gate : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
@@ -18,12 +19,6 @@ public class Gate : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     public GateType type;
     public bool isDraggable = true;
     public Color notDraggableColor;
-
-    public void BlockDragging()
-    {
-        isDraggable = false;
-        image.color = notDraggableColor;
-    }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -61,5 +56,11 @@ public class Gate : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         transform.SetParent(slot);
         transform.localPosition = Vector3.zero;
         image.raycastTarget = true;
+    }
+
+    public void BlockDragging()
+    {
+        isDraggable = false;
+        image.color = notDraggableColor;
     }
 }

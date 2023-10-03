@@ -227,6 +227,12 @@ public class Level : MonoBehaviour
         return Enumerable.Range(0, NumBits).Select(dim => gateGrid[dim, row]).ToList();
     }
 
+    public bool CheckControls(int state, int row)
+    {
+        return Gates(row).Select((g, i) => (g, i))
+            .Where(x => x.g != null && x.g.type == GateType.Control).All(x => (state & (1 << x.i)) != 0);
+    }
+
     public Vector3 PegPos(int state, int row)
     {
         var clampedRow = Mathf.Clamp(row, 0, numRows - 1);

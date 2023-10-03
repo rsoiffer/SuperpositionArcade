@@ -1358,7 +1358,7 @@ MonoBehaviour:
   gatesAfter: []
   gatesPlaceable:
   - {fileID: 1538031847597037132, guid: 600735dd44b0e7e478f40807c93a0643, type: 3}
-  - {fileID: 5533708170616851240, guid: 308de3e7d63390144b22400a930c457a, type: 3}
+  - {fileID: 5533708170616851240, guid: 9fd3c995f6674ab4ca993a8c49d63d27, type: 3}
 --- !u!1 &669010647
 GameObject:
   m_ObjectHideFlags: 0
