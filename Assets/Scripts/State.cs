@@ -12,6 +12,7 @@ public class State : MonoBehaviour
     public AnimationCurve bounceCurveSide;
     public Level level;
     public float collapsePreempt = .2f;
+    public GameObject explosionPrefab;
 
     public int variant;
     public float time;
@@ -79,7 +80,13 @@ public class State : MonoBehaviour
                 q.DestroyQuball();
             }
 
-            if (totalAmplitude.Magnitude < 1e-3) continue;
+            if (totalAmplitude.Magnitude < 1e-3)
+            {
+                var newExplosion = Instantiate(explosionPrefab);
+                newExplosion.transform.position = qs[0].transform.position;
+                continue;
+            }
+
             var newQuball = NewQuball();
             newQuball.Set(state, totalAmplitude);
         }
@@ -117,7 +124,14 @@ public class State : MonoBehaviour
         else
         {
             level.StateHitBottom(this);
-            foreach (var q in quballs) q.DestroyQuball();
+            foreach (var q in quballs)
+            {
+                q.DestroyQuball();
+                if (level.QuballValid(q)) continue;
+                var newExplosion = Instantiate(explosionPrefab);
+                newExplosion.transform.position = q.transform.position;
+            }
+
             Destroy(gameObject);
         }
     }

@@ -219,6 +219,12 @@ public class Level : MonoBehaviour
         }
     }
 
+    public bool QuballValid(Quball q)
+    {
+        var goalState = def.goalStates[q.variant];
+        return q.stateCurrent == goalState;
+    }
+
     public void StateHitBottom(State state)
     {
         var goalState = def.goalStates[state.variant];
@@ -245,7 +251,7 @@ public class Level : MonoBehaviour
     public Vector3 PegPos(int state, int row)
     {
         var clampedRow = Mathf.Clamp(row, 0, numRows - 1);
-        var offset = (clampedRow - row) * new Vector3(0, 300, 0);
+        var offset = (clampedRow - row) * new Vector3(0, 200, 0);
         return pegGrid[state, clampedRow].transform.position + offset;
     }
 

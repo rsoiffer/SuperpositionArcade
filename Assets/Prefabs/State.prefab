@@ -105,5 +105,8 @@ MonoBehaviour:
     m_RotationOrder: 4
   level: {fileID: 0}
   collapsePreempt: 0.15
+  explosionPrefab: {fileID: 4738348253954454611, guid: dd690395baf4f3749a37e99d13a65f3b,
+    type: 3}
+  variant: 0
   time: 0
   quballs: []
