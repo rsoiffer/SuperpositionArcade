@@ -1223,7 +1223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdaa522debc265b4db57345b80cdfe9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  def: {fileID: 1166319728}
+  def: {fileID: 1238014121}
   numRows: 4
   bucketsParent: {fileID: 539504116}
   bucketYesPrefab: {fileID: 3997175638177723116, guid: ce030ff33297225459d7f4a36d4a4b65,
@@ -1749,7 +1749,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 250, y: 0}
-  m_SizeDelta: {x: 965.5, y: 0}
+  m_SizeDelta: {x: 864, y: 0}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1015143136
 MonoBehaviour:
@@ -1958,8 +1958,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 607.75, y: 0}
-  m_SizeDelta: {x: 1215.5, y: 0}
+  m_AnchoredPosition: {x: 557, y: 0}
+  m_SizeDelta: {x: 1114, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1082932797
 MonoBehaviour:

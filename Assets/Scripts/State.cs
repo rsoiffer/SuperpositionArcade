@@ -50,7 +50,7 @@ public class State : MonoBehaviour
     {
         quballs.RemoveAll(q => q == null);
         foreach (var q in quballs)
-            Destroy(q.gameObject);
+            q.DestroyQuball();
 
         var newQuball = Instantiate(quballPrefab, transform);
         newQuball.Set(state, Complex.One);
@@ -68,7 +68,7 @@ public class State : MonoBehaviour
             foreach (var q in qs)
             {
                 totalAmplitude += q.Amplitude;
-                Destroy(q.gameObject);
+                q.DestroyQuball();
             }
 
             if (totalAmplitude.Magnitude < 1e-3) continue;
@@ -108,6 +108,7 @@ public class State : MonoBehaviour
         else
         {
             level.StateHitBottom(this);
+            foreach (var q in quballs) q.DestroyQuball();
             Destroy(gameObject);
         }
     }
