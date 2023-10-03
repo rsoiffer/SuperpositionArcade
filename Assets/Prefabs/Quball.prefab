@@ -271,7 +271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9868fbf5392545efac8b46410a3e5e84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  noiseScale: {x: 0.2, y: 0}
+  noiseScale: {x: 4, y: 0}
   scalePower: 0.5
   baseHue: 0.55
   detachOnDestroy:

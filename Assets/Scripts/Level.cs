@@ -2,10 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
+using Vector3 = UnityEngine.Vector3;
 
 public class Level : MonoBehaviour
 {
@@ -63,8 +66,11 @@ public class Level : MonoBehaviour
 
         for (var state = 0; state < 1 << NumBits; state++)
         {
-            var bucket = Instantiate(state == def.goalState ? bucketYesPrefab : bucketNoPrefab, bucketsParent);
+            var matchingGoal = def.goalStates.FindIndex(s => s == state);
+            var bucket = Instantiate(matchingGoal >= 0 ? bucketYesPrefab : bucketNoPrefab, bucketsParent);
             bucket.level = this;
+            if (matchingGoal >= 0 && matchingGoal < def.goalPhases.Count)
+                bucket.phase = def.goalPhases[matchingGoal];
 
             foreach (var bucketTextParent in bucketTextParents)
             {
@@ -194,8 +200,10 @@ public class Level : MonoBehaviour
             {
                 spawnCooldown = 1;
                 var newState = Instantiate(statePrefab, objectsParent);
+                var variant = Random.Range(0, def.startStates.Count);
                 newState.level = this;
-                newState.ResetToState(def.startState);
+                newState.variant = variant;
+                newState.ResetToState(def.startStates[variant]);
             }
 
             yield return null;
@@ -204,7 +212,12 @@ public class Level : MonoBehaviour
 
     public void StateHitBottom(State state)
     {
-        var fidelity = state.quballs.Sum(q => q.stateCurrent == def.goalState ? (float)q.Amplitude.Magnitude : 0);
+        var goalState = def.goalStates[state.variant];
+        var goalConjAmplitude = def.goalPhases.Count == 0
+            ? Complex.One
+            : Complex.FromPolarCoordinates(1, -2 * Mathf.PI * def.goalPhases[state.variant]);
+        var fidelity = state.quballs.Sum(q =>
+            q.stateCurrent == goalState ? (float)(q.Amplitude * goalConjAmplitude).Real : 0);
         victoryProgress += fidelity - (1 - fidelity) * wrongMultiplier;
         victoryProgress = Mathf.Clamp(victoryProgress, 0, victoryThreshold);
     }

@@ -166,5 +166,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isYes: 1
   level: {fileID: 0}
+  phase: 0
+  baseHue: 0.55
   fill: {fileID: 5834899266711366031}
   maxFillHeight: 64
+  imagesToColor:
+  - {fileID: 2761768341645043516}

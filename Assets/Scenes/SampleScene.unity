@@ -1236,7 +1236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdaa522debc265b4db57345b80cdfe9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  def: {fileID: 1238014121}
+  def: {fileID: 664481342}
   numRows: 4
   bucketsParent: {fileID: 539504116}
   bucketYesPrefab: {fileID: 3997175638177723116, guid: ce030ff33297225459d7f4a36d4a4b65,
@@ -1303,8 +1303,62 @@ Transform:
   - {fileID: 1418918995}
   - {fileID: 1166319727}
   - {fileID: 1238014120}
+  - {fileID: 664481341}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &664481340
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 664481341}
+  - component: {fileID: 664481342}
+  m_Layer: 0
+  m_Name: Level 4 - SWAP
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &664481341
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 664481340}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 639885579}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &664481342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 664481340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04c95d9ded044e058702e9e3ffcf97a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numBits: 2
+  startStates: 00000000010000000200000003000000
+  goalStates: 00000000020000000100000003000000
+  goalPhases: []
+  gatesBefore: []
+  gatesAfter: []
+  gatesPlaceable:
+  - {fileID: 1538031847597037132, guid: 600735dd44b0e7e478f40807c93a0643, type: 3}
+  - {fileID: 5533708170616851240, guid: 308de3e7d63390144b22400a930c457a, type: 3}
 --- !u!1 &669010647
 GameObject:
   m_ObjectHideFlags: 0
@@ -1869,7 +1923,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 250, y: 0}
-  m_SizeDelta: {x: 1015, y: 0}
+  m_SizeDelta: {x: 948, y: 0}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1015143136
 MonoBehaviour:
@@ -2078,8 +2132,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 632.5, y: 0}
-  m_SizeDelta: {x: 1265, y: 0}
+  m_AnchoredPosition: {x: 599, y: 0}
+  m_SizeDelta: {x: 1198, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1082932797
 MonoBehaviour:
@@ -2246,8 +2300,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numBits: 3
-  startState: 2
-  goalState: 4
+  startStates: 02000000
+  goalStates: 04000000
+  goalPhases: []
   gatesBefore: []
   gatesAfter: []
   gatesPlaceable:
@@ -2297,8 +2352,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numBits: 2
-  startState: 1
-  goalState: 3
+  startStates: 01000000
+  goalStates: 03000000
+  goalPhases: []
   gatesBefore:
   - {fileID: 0}
   - {fileID: 6423569070495509838, guid: 0f6758c881c56b64698574401ecff4d2, type: 3}
@@ -2504,8 +2560,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numBits: 2
-  startState: 1
-  goalState: 3
+  startStates: 01000000
+  goalStates: 03000000
+  goalPhases: []
   gatesBefore: []
   gatesAfter:
   - {fileID: 6423569070495509838, guid: 0f6758c881c56b64698574401ecff4d2, type: 3}

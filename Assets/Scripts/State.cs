@@ -13,6 +13,7 @@ public class State : MonoBehaviour
     public Level level;
     public float collapsePreempt = .2f;
 
+    public int variant;
     public float time;
     public List<Quball> quballs;
 
