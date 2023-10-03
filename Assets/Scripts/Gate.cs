@@ -41,7 +41,7 @@ public class Gate : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     {
         if (!isDraggable) return;
         // transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        transform.position = Input.mousePosition;
+        transform.position = new Vector3(Input.mousePosition.x, Input.mousePosition.y, transform.position.z);
     }
 
     public void OnEndDrag(PointerEventData eventData)

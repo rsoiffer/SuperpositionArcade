@@ -42,7 +42,7 @@ public class State : MonoBehaviour
             q.transform.position = new Vector3(
                 Mathf.LerpUnclamped(previousPos.x, currentPos.x, bounceCurveSide.Evaluate(timeFrac)),
                 Mathf.LerpUnclamped(previousPos.y, currentPos.y, bounceCurve.Evaluate(timeFrac)),
-                0
+                q.transform.position.z
             );
         }
     }
