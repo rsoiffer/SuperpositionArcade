@@ -29,7 +29,8 @@ public class Level : MonoBehaviour
     public GameObject pegEmptyPrefab;
     public Peg pegPrefab;
 
-    [Header("States")] public State statePrefab;
+    [Header("States")] public Transform objectsParent;
+    public State statePrefab;
     public float spawnRate = 1;
     public float timeScale = 1;
 
@@ -192,7 +193,7 @@ public class Level : MonoBehaviour
             if (spawnCooldown < 0)
             {
                 spawnCooldown = 1;
-                var newState = Instantiate(statePrefab);
+                var newState = Instantiate(statePrefab, objectsParent);
                 newState.level = this;
                 newState.ResetToState(def.startState);
             }
@@ -215,15 +216,9 @@ public class Level : MonoBehaviour
 
     public Vector3 PegPos(int state, int row)
     {
-        var mainCamera = Camera.main!;
-        var slotPos = row < 0
-            ? new Vector3(0, 5, 0)
-            : row >= numRows
-                ? new Vector3(0, -5, 0)
-                : mainCamera.ScreenToWorldPoint(slotGrid[0, row].transform.position);
-        var bucket = bucketsParent.GetChild(state);
-        var bucketPos = mainCamera.ScreenToWorldPoint(bucket.position);
-        return new Vector3(bucketPos.x, slotPos.y, 0);
+        var clampedRow = Mathf.Clamp(row, 0, numRows - 1);
+        var offset = (clampedRow - row) * new Vector3(0, 300, 0);
+        return pegGrid[state, clampedRow].transform.position + offset;
     }
 
     private static bool SequenceEquals<T>(T[,] a, T[,] b) where T : Object
