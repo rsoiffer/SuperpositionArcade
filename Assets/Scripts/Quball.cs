@@ -14,6 +14,8 @@ public class Quball : MonoBehaviour
     [SerializeField] private float detachLifetime;
     [SerializeField] private List<Image> imagesToColor;
     [SerializeField] private List<Renderer> renderersToColor;
+    [SerializeField] private List<GameObject> variants;
+    [SerializeField] private List<float> variantBaseHueOffsets;
 
     private Vector3 baseScale;
 
@@ -23,6 +25,7 @@ public class Quball : MonoBehaviour
     public int statePrevious { get; private set; } = -1;
     public Vector3 currentPosNoise { get; private set; }
     public Vector3 previousPosNoise { get; private set; }
+    public int variant { get; set; }
 
     private void Awake()
     {
@@ -55,12 +58,13 @@ public class Quball : MonoBehaviour
 
     private void UpdateGraphics()
     {
-        var hue = baseHue + (float)Amplitude.Phase / (2 * Mathf.PI);
+        var hue = baseHue + variantBaseHueOffsets[variant] + (float)Amplitude.Phase / (2 * Mathf.PI);
         foreach (var image in imagesToColor)
             image.color = Color.HSVToRGB(hue - Mathf.FloorToInt(hue), 1, 1);
         foreach (var r in renderersToColor)
             r.material.color = Color.HSVToRGB(hue - Mathf.FloorToInt(hue), 1, 1);
         transform.localScale = baseScale * Mathf.Pow((float)Amplitude.Magnitude, scalePower);
+        for (var i = 0; i < variants.Count; i++) variants[i].SetActive(i == variant);
     }
 
     public void DestroyQuball()

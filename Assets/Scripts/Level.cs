@@ -20,6 +20,9 @@ public class Level : MonoBehaviour
     public Bucket bucketNoPrefab;
     public List<Transform> bucketTextParents;
     public TextMeshProUGUI bucketTextPrefab;
+    public Transform cannonsParent;
+    public Bucket cannonYesPrefab;
+    public Bucket cannonNoPrefab;
 
     [Header("Gate Slots")] public GridLayoutGroup commandGrid;
     public GameObject columnLabelPrefab;
@@ -69,8 +72,14 @@ public class Level : MonoBehaviour
             var matchingGoal = def.goalStates.FindIndex(s => s == state);
             var bucket = Instantiate(matchingGoal >= 0 ? bucketYesPrefab : bucketNoPrefab, bucketsParent);
             bucket.level = this;
+            bucket.variant = matchingGoal;
             if (matchingGoal >= 0 && matchingGoal < def.goalPhases.Count)
                 bucket.phase = def.goalPhases[matchingGoal];
+
+            var matchingStart = def.startStates.FindIndex(s => s == state);
+            var cannon = Instantiate(matchingStart >= 0 ? cannonYesPrefab : cannonNoPrefab, cannonsParent);
+            cannon.level = this;
+            cannon.variant = matchingStart;
 
             foreach (var bucketTextParent in bucketTextParents)
             {

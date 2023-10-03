@@ -139,6 +139,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bucket No
       objectReference: {fileID: 0}
+    - target: {fileID: 8496995538462405079, guid: ce030ff33297225459d7f4a36d4a4b65,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

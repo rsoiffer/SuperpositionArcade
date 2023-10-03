@@ -47,15 +47,22 @@ public class State : MonoBehaviour
         }
     }
 
+    private Quball NewQuball()
+    {
+        var newQuball = Instantiate(quballPrefab, transform);
+        newQuball.variant = variant;
+        quballs.Add(newQuball);
+        return newQuball;
+    }
+
     public void ResetToState(int state)
     {
         quballs.RemoveAll(q => q == null);
         foreach (var q in quballs)
             q.DestroyQuball();
 
-        var newQuball = Instantiate(quballPrefab, transform);
+        var newQuball = NewQuball();
         newQuball.Set(state, Complex.One);
-        quballs.Add(newQuball);
     }
 
     public void Collapse()
@@ -73,9 +80,8 @@ public class State : MonoBehaviour
             }
 
             if (totalAmplitude.Magnitude < 1e-3) continue;
-            var newQuball = Instantiate(quballPrefab, transform);
+            var newQuball = NewQuball();
             newQuball.Set(state, totalAmplitude);
-            quballs.Add(newQuball);
         }
 
         quballs.RemoveAll(q => q == null);
@@ -135,10 +141,9 @@ public class State : MonoBehaviour
         foreach (var q in quballs.ToList())
         {
             if (!level.CheckControls(q.stateCurrent, row)) continue;
-            var newQuball = Instantiate(quballPrefab, transform);
+            var newQuball = NewQuball();
             newQuball.Set(q.statePrevious, q.Amplitude / Mathf.Sqrt(2));
             newQuball.Set(q.stateCurrent ^ (1 << dim), q.Amplitude / Mathf.Sqrt(2));
-            quballs.Add(newQuball);
             q.Set(q.stateCurrent, (q.Bit(dim) ? -1 : 1) * q.Amplitude / Mathf.Sqrt(2));
         }
     }

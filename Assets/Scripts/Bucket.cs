@@ -9,6 +9,9 @@ public class Bucket : MonoBehaviour
     public float phase;
 
     public float baseHue;
+    public int variant;
+    [SerializeField] private List<GameObject> variants;
+    public List<float> variantBaseHueOffsets;
     public RectTransform fill;
     public float maxFillHeight;
     public List<Image> imagesToColor;
@@ -16,9 +19,11 @@ public class Bucket : MonoBehaviour
     private void Update()
     {
         if (!isYes) return;
-        fill.offsetMax = new Vector2(0, maxFillHeight * level.VictoryPercent);
-        var hue = baseHue + phase;
+        if (fill != null)
+            fill.offsetMax = new Vector2(0, maxFillHeight * level.VictoryPercent);
+        var hue = baseHue + variantBaseHueOffsets[variant] + phase;
         foreach (var image in imagesToColor)
             image.color = Color.HSVToRGB(hue - Mathf.FloorToInt(hue), 1, 1);
+        for (var i = 0; i < variants.Count; i++) variants[i].SetActive(i == variant);
     }
 }
