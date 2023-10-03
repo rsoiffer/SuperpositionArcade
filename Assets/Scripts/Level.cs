@@ -40,6 +40,11 @@ public class Level : MonoBehaviour
     public float victoryThreshold = 100;
     public float wrongMultiplier = 100;
 
+    [Header("Highlights")] public Transform commandHighlightsParent;
+    public Image commandHighlightPrefab;
+    public Transform bucketHighlightsParent;
+    public Image bucketHighlightsPrefab;
+
     private Gate[,] gateGrid;
     private Peg[,] pegGrid;
     private (int, int) prevScreenSize;
@@ -118,6 +123,20 @@ public class Level : MonoBehaviour
             newPeg.level = this;
         }
 
+        for (var dim = 0; dim < NumBits; dim++)
+        {
+            var commandHighlight = Instantiate(commandHighlightPrefab, commandHighlightsParent);
+            var color = dimensionsColors[dim];
+            color.a = commandHighlight.color.a;
+            commandHighlight.color = color;
+        }
+
+        for (var state = 0; state < 1 << NumBits; state++)
+        {
+            var bucketHighlight = Instantiate(bucketHighlightsPrefab, bucketHighlightsParent);
+            bucketHighlight.enabled = false;
+        }
+
         StartCoroutine(SpawnCoroutine());
 
         scrollRect.onValueChanged.AddListener(_ => scrollRectChanged = true);
@@ -134,15 +153,34 @@ public class Level : MonoBehaviour
 
         var newScreenSize = (Screen.width, Screen.height);
 
-        if (SequenceEquals(newGateGrid, gateGrid) && newScreenSize == prevScreenSize && updateAfterFrames != 0 &&
-            !scrollRectChanged) return;
-        gateGrid = newGateGrid;
-        prevScreenSize = newScreenSize;
-        scrollRectChanged = false;
+        if (!SequenceEquals(newGateGrid, gateGrid) || newScreenSize != prevScreenSize || updateAfterFrames == 0 ||
+            scrollRectChanged)
+        {
+            gateGrid = newGateGrid;
+            prevScreenSize = newScreenSize;
+            scrollRectChanged = false;
 
-        for (var row = 0; row < numRows; row++)
+            for (var row = 0; row < numRows; row++)
+            for (var state = 0; state < 1 << NumBits; state++)
+                pegGrid[state, row].UpdateGraphics();
+        }
+
+        var dimSelected = -1;
+        for (var dim = 0; dim < NumBits; dim++)
+        {
+            var rect = commandHighlightsParent.GetChild(dim).GetComponent<RectTransform>();
+            if (rect.rect.Contains(rect.InverseTransformPoint(Input.mousePosition))) dimSelected = dim;
+        }
+
         for (var state = 0; state < 1 << NumBits; state++)
-            pegGrid[state, row].UpdateGraphics();
+        {
+            var image = bucketHighlightsParent.GetChild(state).GetComponent<Image>();
+            image.enabled = dimSelected >= 0 && (state & (1 << dimSelected)) != 0;
+            if (dimSelected < 0) continue;
+            var newColor = dimensionsColors[dimSelected];
+            newColor.a = image.color.a;
+            image.color = newColor;
+        }
     }
 
     private IEnumerator SpawnCoroutine()
