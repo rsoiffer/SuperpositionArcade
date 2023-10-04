@@ -2,13 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
-using Vector3 = UnityEngine.Vector3;
 
 public class Level : MonoBehaviour
 {
@@ -222,17 +220,13 @@ public class Level : MonoBehaviour
     public bool QuballValid(Quball q)
     {
         var goalState = def.goalStates[q.variant];
-        return q.stateCurrent == goalState;
+        return q.current.State == goalState;
     }
 
     public void StateHitBottom(State state)
     {
-        var goalState = def.goalStates[state.variant];
-        var goalConjAmplitude = def.goalPhases.Count == 0
-            ? Complex.One
-            : Complex.FromPolarCoordinates(1, -2 * Mathf.PI * def.goalPhases[state.variant]);
-        var fidelity = state.quballs.Sum(q =>
-            q.stateCurrent == goalState ? (float)(q.Amplitude * goalConjAmplitude).Real : 0);
+        var goalData = def.GoalData(state.variant);
+        var fidelity = state.quballs.Sum(q => (float)q.current.Dot(goalData).Real);
         victoryProgress += fidelity - (1 - fidelity) * wrongMultiplier;
         victoryProgress = Mathf.Clamp(victoryProgress, 0, victoryThreshold);
     }

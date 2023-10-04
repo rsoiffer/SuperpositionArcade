@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -38,8 +37,8 @@ public class State : MonoBehaviour
         foreach (var q in quballs)
         {
             var rowId = Mathf.FloorToInt(time);
-            var currentPos = level.PegPos(q.stateCurrent, rowId) + q.currentPosNoise;
-            var previousPos = level.PegPos(q.statePrevious, rowId - 1) + q.previousPosNoise;
+            var currentPos = level.PegPos(q.current.State, rowId) + q.currentPosNoise;
+            var previousPos = level.PegPos(q.previous.State, rowId - 1) + q.previousPosNoise;
             q.transform.position = new Vector3(
                 Mathf.LerpUnclamped(previousPos.x, currentPos.x, bounceCurveSide.Evaluate(timeFrac)),
                 Mathf.LerpUnclamped(previousPos.y, currentPos.y, bounceCurve.Evaluate(timeFrac)),
@@ -63,20 +62,20 @@ public class State : MonoBehaviour
             q.DestroyQuball();
 
         var newQuball = NewQuball();
-        newQuball.Set(state, Complex.One);
+        newQuball.Set(new QData(state, Complex.One));
     }
 
     public void Collapse()
     {
-        foreach (var state in quballs.Select(q => q.stateCurrent).ToHashSet())
+        foreach (var state in quballs.Select(q => q.current.State).ToHashSet())
         {
-            var qs = quballs.Where(q => q.stateCurrent == state).ToList();
+            var qs = quballs.Where(q => q.current.State == state).ToList();
             if (qs.Count <= 1) continue;
 
             var totalAmplitude = Complex.Zero;
             foreach (var q in qs)
             {
-                totalAmplitude += q.Amplitude;
+                totalAmplitude += q.current.Amplitude;
                 q.DestroyQuball();
             }
 
@@ -88,7 +87,7 @@ public class State : MonoBehaviour
             }
 
             var newQuball = NewQuball();
-            newQuball.Set(state, totalAmplitude);
+            newQuball.Set(new QData(state, totalAmplitude));
         }
 
         quballs.RemoveAll(q => q == null);
@@ -102,24 +101,16 @@ public class State : MonoBehaviour
         if (row < level.numRows)
         {
             var gates = level.Gates(row);
-            for (var dim = 0; dim < level.NumBits; dim++)
-                if (gates[dim] != null)
-                    switch (gates[dim].type)
-                    {
-                        case GateType.X:
-                            GateX(dim, row);
-                            break;
-                        case GateType.Z:
-                            GateZ(dim, row);
-                            break;
-                        case GateType.H:
-                            GateH(dim, row);
-                            break;
-                        case GateType.Control:
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
+            foreach (var q in quballs.ToList())
+            {
+                var newQData = q.current.ApplyGateRow(gates);
+                q.Set(newQData.First());
+                for (var i = 1; i < newQData.Count; i++)
+                {
+                    var newQuball = NewQuball();
+                    newQuball.Set(newQData[i]);
+                }
+            }
         }
         else
         {
@@ -133,32 +124,6 @@ public class State : MonoBehaviour
             }
 
             Destroy(gameObject);
-        }
-    }
-
-    public void GateX(int dim, int row)
-    {
-        foreach (var q in quballs)
-            if (level.CheckControls(q.stateCurrent, row))
-                q.Set(q.stateCurrent ^ (1 << dim), q.Amplitude);
-    }
-
-    public void GateZ(int dim, int row)
-    {
-        foreach (var q in quballs)
-            if (level.CheckControls(q.stateCurrent, row))
-                q.Set(q.stateCurrent, q.Amplitude * (q.Bit(dim) ? -1 : 1));
-    }
-
-    public void GateH(int dim, int row)
-    {
-        foreach (var q in quballs.ToList())
-        {
-            if (!level.CheckControls(q.stateCurrent, row)) continue;
-            var newQuball = NewQuball();
-            newQuball.Set(q.statePrevious, q.Amplitude / Mathf.Sqrt(2));
-            newQuball.Set(q.stateCurrent ^ (1 << dim), q.Amplitude / Mathf.Sqrt(2));
-            q.Set(q.stateCurrent, (q.Bit(dim) ? -1 : 1) * q.Amplitude / Mathf.Sqrt(2));
         }
     }
 }
