@@ -72,7 +72,11 @@ public class Level : MonoBehaviour
             bucket.level = this;
             bucket.variant = matchingGoal;
             if (matchingGoal >= 0 && matchingGoal < def.goalPhases.Count)
-                bucket.phase = def.goalPhases[matchingGoal];
+            {
+                var phaseColorer = bucket.GetComponent<PhaseColorer>();
+                phaseColorer.phase = def.goalPhases[matchingGoal];
+                phaseColorer.variant = matchingGoal;
+            }
 
             var matchingStart = def.startStates.FindIndex(s => s == state);
             var cannon = Instantiate(matchingStart >= 0 ? cannonYesPrefab : cannonNoPrefab, cannonsParent);

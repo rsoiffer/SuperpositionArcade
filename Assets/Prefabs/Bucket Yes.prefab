@@ -498,6 +498,7 @@ GameObject:
   - component: {fileID: 9062691241575025093}
   - component: {fileID: 2761768341645043516}
   - component: {fileID: 3997175638177723116}
+  - component: {fileID: 3400186121555754742}
   m_Layer: 5
   m_Name: Bucket Yes
   m_TagString: Untagged
@@ -581,21 +582,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isYes: 1
   level: {fileID: 0}
-  phase: 0
-  baseHue: 0.55
   variant: 0
   variants:
   - {fileID: 8496995538462405079}
   - {fileID: 3087523536303308541}
   - {fileID: 4100729479587916267}
   - {fileID: 1409418326477968377}
-  variantBaseHueOffsets:
-  - 0
-  - -0.08
-  - -0.16
-  - 0.06
   fill: {fileID: 5834899266711366031}
   maxFillHeight: 64
+--- !u!114 &3400186121555754742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5954613784015183681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02e327d530164c95bd04d0aef3713e00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   imagesToColor:
   - {fileID: 2761768341645043516}
   - {fileID: 4118056126080567360}
@@ -603,6 +609,9 @@ MonoBehaviour:
   - {fileID: 3666498670646329184}
   - {fileID: 3507025775213409222}
   - {fileID: 596303341616369582}
+  renderersToColor: []
+  variant: 0
+  phase: 0
 --- !u!1 &7203923321215047602
 GameObject:
   m_ObjectHideFlags: 0
