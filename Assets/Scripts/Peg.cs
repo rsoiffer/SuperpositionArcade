@@ -1,6 +1,9 @@
+using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using UnityEngine;
 using UnityEngine.UI;
+using Vector3 = UnityEngine.Vector3;
 
 public class Peg : MonoBehaviour
 {
@@ -12,6 +15,37 @@ public class Peg : MonoBehaviour
     public Image imageX;
     public Image imageZ;
     public Image imageH;
+
+    public LineRenderer arrowPrefab;
+    public RectTransform arrowHighlightArea;
+    public GameObject showOnHighlight;
+    private readonly List<LineRenderer> currentArrows = new();
+
+    public void Update()
+    {
+        var selected = arrowHighlightArea.rect.Contains(arrowHighlightArea.InverseTransformPoint(Input.mousePosition));
+        showOnHighlight.SetActive(selected);
+        foreach (var a in currentArrows) Destroy(a.gameObject);
+        currentArrows.Clear();
+        if (selected)
+        {
+            var qData = new QData(state, Complex.One);
+            foreach (var q2 in qData.ApplyGateRow(level.Gates(row)))
+            {
+                var startPos = level.PegPos(state, row);
+                var endPos = level.PegPos(q2.State, row + 1);
+                var direction = endPos - startPos;
+
+                var newArrow = Instantiate(arrowPrefab, transform);
+                newArrow.transform.position = endPos;
+                newArrow.transform.Rotate(0, 0, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
+                newArrow.SetPositions(new[] { startPos, endPos });
+                newArrow.positionCount = 2;
+
+                currentArrows.Add(newArrow);
+            }
+        }
+    }
 
     public void UpdateGraphics()
     {

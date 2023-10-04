@@ -51,7 +51,7 @@ public class Quball : MonoBehaviour
 
     private void UpdateGraphics()
     {
-        var hue = baseHue + variantBaseHueOffsets[variant] + (float)current.Amplitude.Phase / (2 * Mathf.PI);
+        var hue = baseHue + variantBaseHueOffsets[variant] + current.Phase;
         foreach (var image in imagesToColor)
             image.color = Color.HSVToRGB(hue - Mathf.FloorToInt(hue), 1, 1);
         foreach (var r in renderersToColor)
