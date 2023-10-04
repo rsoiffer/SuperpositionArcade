@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3325759550629456767}
   - component: {fileID: 5385217383593548700}
+  - component: {fileID: 78088350114779010}
   m_Layer: 0
   m_Name: Arrow
   m_TagString: Untagged
@@ -138,6 +139,24 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &78088350114779010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5645675748035786585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02e327d530164c95bd04d0aef3713e00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  imagesToColor: []
+  renderersToColor:
+  - {fileID: 5385217383593548700}
+  - {fileID: 1278960769187344462}
+  variant: 0
+  phase: 0
 --- !u!1 &8734701536986167149
 GameObject:
   m_ObjectHideFlags: 0

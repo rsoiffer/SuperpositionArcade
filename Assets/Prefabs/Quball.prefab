@@ -454,6 +454,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4763039864791712773}
   - component: {fileID: -5797438902204874076}
+  - component: {fileID: 388102815769070455}
   m_Layer: 0
   m_Name: Quball
   m_TagString: Untagged
@@ -499,10 +500,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   noiseScale: {x: 4, y: 0}
   scalePower: 0.5
-  baseHue: 0.55
   detachOnDestroy:
   - {fileID: 2553890859713679185}
   detachLifetime: 1
+  variants:
+  - {fileID: 718271155295416445}
+  - {fileID: 366123654358037035}
+  - {fileID: 6169994293176373996}
+  - {fileID: 7249530289190211659}
+  phaseColorer: {fileID: 388102815769070455}
+--- !u!114 &388102815769070455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3974052093484340732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02e327d530164c95bd04d0aef3713e00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   imagesToColor:
   - {fileID: 2293856686678378763}
   - {fileID: 3161816107776655637}
@@ -510,16 +528,8 @@ MonoBehaviour:
   - {fileID: 6019313707814008550}
   renderersToColor:
   - {fileID: 556005577464623296}
-  variants:
-  - {fileID: 718271155295416445}
-  - {fileID: 366123654358037035}
-  - {fileID: 6169994293176373996}
-  - {fileID: 7249530289190211659}
-  variantBaseHueOffsets:
-  - 0
-  - -0.08
-  - -0.16
-  - 0.06
+  variant: 0
+  phase: 0
 --- !u!1 &4033157512799152669
 GameObject:
   m_ObjectHideFlags: 0

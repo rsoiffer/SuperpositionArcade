@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
-using UnityEngine.UI;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 
@@ -9,13 +8,10 @@ public class Quball : MonoBehaviour
 {
     [SerializeField] private Vector2 noiseScale = new(.2f, 0);
     [SerializeField] private float scalePower = 1;
-    [SerializeField] private float baseHue;
     [SerializeField] private List<GameObject> detachOnDestroy;
     [SerializeField] private float detachLifetime;
-    [SerializeField] private List<Image> imagesToColor;
-    [SerializeField] private List<Renderer> renderersToColor;
     [SerializeField] private List<GameObject> variants;
-    [SerializeField] private List<float> variantBaseHueOffsets;
+    [SerializeField] private PhaseColorer phaseColorer;
 
     private Vector3 baseScale;
 
@@ -51,11 +47,8 @@ public class Quball : MonoBehaviour
 
     private void UpdateGraphics()
     {
-        var hue = baseHue + variantBaseHueOffsets[variant] + current.Phase;
-        foreach (var image in imagesToColor)
-            image.color = Color.HSVToRGB(hue - Mathf.FloorToInt(hue), 1, 1);
-        foreach (var r in renderersToColor)
-            r.material.color = Color.HSVToRGB(hue - Mathf.FloorToInt(hue), 1, 1);
+        phaseColorer.variant = variant;
+        phaseColorer.phase = current.Phase;
         transform.localScale = baseScale * Mathf.Pow(current.Magnitude, scalePower);
         for (var i = 0; i < variants.Count; i++) variants[i].SetActive(i == variant);
     }

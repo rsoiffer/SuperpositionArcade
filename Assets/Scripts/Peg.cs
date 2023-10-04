@@ -19,21 +19,23 @@ public class Peg : MonoBehaviour
     public LineRenderer arrowPrefab;
     public RectTransform arrowHighlightArea;
     public GameObject showOnHighlight;
-    private readonly List<LineRenderer> currentArrows = new();
+    public float arrowLerpStart = .1f;
+    public float arrowLerpEnd = .9f;
+    private readonly List<LineRenderer> _currentArrows = new();
 
     public void Update()
     {
         var selected = arrowHighlightArea.rect.Contains(arrowHighlightArea.InverseTransformPoint(Input.mousePosition));
         showOnHighlight.SetActive(selected);
-        foreach (var a in currentArrows) Destroy(a.gameObject);
-        currentArrows.Clear();
+        foreach (var a in _currentArrows) Destroy(a.gameObject);
+        _currentArrows.Clear();
         if (selected)
         {
             var qData = new QData(state, Complex.One);
             foreach (var q2 in qData.ApplyGateRow(level.Gates(row)))
             {
-                var startPos = level.PegPos(state, row);
-                var endPos = level.PegPos(q2.State, row + 1);
+                var startPos = Vector3.Lerp(level.PegPos(state, row), level.PegPos(q2.State, row + 1), arrowLerpStart);
+                var endPos = Vector3.Lerp(level.PegPos(state, row), level.PegPos(q2.State, row + 1), arrowLerpEnd);
                 var direction = endPos - startPos;
 
                 var newArrow = Instantiate(arrowPrefab, transform);
@@ -41,8 +43,9 @@ public class Peg : MonoBehaviour
                 newArrow.transform.Rotate(0, 0, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
                 newArrow.SetPositions(new[] { startPos, endPos });
                 newArrow.positionCount = 2;
+                newArrow.GetComponent<PhaseColorer>().phase = q2.Phase;
 
-                currentArrows.Add(newArrow);
+                _currentArrows.Add(newArrow);
             }
         }
     }
