@@ -10,6 +10,8 @@ using Random = UnityEngine.Random;
 
 public class Level : MonoBehaviour
 {
+    public static int LevelId;
+
     [Header("General")] public LevelDefinition def;
     public int numRows = 2;
 
@@ -44,6 +46,7 @@ public class Level : MonoBehaviour
     [Header("Victory")] public float victoryProgress;
     public float victoryThreshold = 100;
     public float wrongMultiplier = 100;
+    public GameObject victoryUI;
 
     [Header("Highlights")] public Transform commandHighlightsParent;
     public Image commandHighlightPrefab;
@@ -62,6 +65,8 @@ public class Level : MonoBehaviour
 
     private void Start()
     {
+        def = transform.GetChild(LevelId).GetComponent<LevelDefinition>();
+
         slotGrid = new GateSlot[NumBits, numRows];
         pegGrid = new Peg[1 << NumBits, numRows];
 
@@ -199,6 +204,8 @@ public class Level : MonoBehaviour
             newColor.a = image.color.a;
             image.color = newColor;
         }
+
+        if (VictoryPercent >= 1) victoryUI.SetActive(true);
     }
 
     private IEnumerator SpawnCoroutine()
