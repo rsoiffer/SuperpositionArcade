@@ -12,6 +12,8 @@ public class LevelDefinition : MonoBehaviour
     public List<Gate> gatesAfter;
     public List<Gate> gatesPlaceable;
 
+    public string LevelName => name;
+
     public QData GoalData(int variant)
     {
         var goalState = goalStates[variant];

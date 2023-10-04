@@ -7,6 +7,7 @@ public class SwitchLevel : MonoBehaviour
 {
     public bool resetLevelId;
     public int levelIdChange = 1;
+    public string sceneName = "Level";
 
     private void Start()
     {
@@ -14,7 +15,7 @@ public class SwitchLevel : MonoBehaviour
         {
             if (resetLevelId) Level.LevelId = 0;
             Level.LevelId += levelIdChange;
-            SceneManager.LoadScene("Level");
+            SceneManager.LoadScene(sceneName);
         });
     }
 }
