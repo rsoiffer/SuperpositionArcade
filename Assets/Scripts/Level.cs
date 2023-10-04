@@ -72,7 +72,7 @@ public class Level : MonoBehaviour
             bucket.level = this;
             bucket.variant = matchingGoal;
             var phaseColorer = bucket.GetComponent<PhaseColorer>();
-            phaseColorer.variant = matchingGoal;
+            phaseColorer.variant = matchingGoal < 0 ? 0 : matchingGoal;
             if (matchingGoal >= 0 && matchingGoal < def.goalPhases.Count)
                 phaseColorer.phase = def.goalPhases[matchingGoal];
 
@@ -81,7 +81,7 @@ public class Level : MonoBehaviour
             cannon.level = this;
             cannon.variant = matchingStart;
             var phaseColorerCannon = cannon.GetComponent<PhaseColorer>();
-            phaseColorerCannon.variant = matchingStart;
+            phaseColorerCannon.variant = matchingGoal < 0 ? 0 : matchingGoal;
 
             foreach (var bucketTextParent in bucketTextParents)
             {
