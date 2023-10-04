@@ -100,9 +100,9 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
-    - _Noise_Frequency: 0.5
-    - _Noise_Power: 50
-    - _Noise_Scale: 1.35
+    - _Noise_Frequency: 2
+    - _Noise_Power: 20
+    - _Noise_Scale: 1.25
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 0
