@@ -108,6 +108,7 @@ public class State : MonoBehaviour
                 for (var i = 1; i < newQData.Count; i++)
                 {
                     var newQuball = NewQuball();
+                    newQuball.Set(q.previous);
                     newQuball.Set(newQData[i]);
                 }
             }
