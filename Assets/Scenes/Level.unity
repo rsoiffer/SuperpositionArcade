@@ -5720,8 +5720,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   button: {fileID: 7315632633296973432}
   level: {fileID: 639885578}
-  turboSpeedMul: 50
-  turboDuration: 2
+  turboSpeedMul: 30
+  turboDuration: 3
 --- !u!114 &7315632633296973432
 MonoBehaviour:
   m_ObjectHideFlags: 0

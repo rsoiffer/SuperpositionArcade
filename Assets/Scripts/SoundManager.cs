@@ -11,6 +11,9 @@ public class SoundManager : MonoBehaviour
 
     public AudioClip click1;
     public AudioClip click2;
+    public AudioClip coin1;
+    public AudioClip explosion;
+    public AudioClip impact4;
 
     private void Awake()
     {
@@ -33,12 +36,13 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    private IEnumerator PlayClip(AudioClip clip)
+    private IEnumerator PlayClip(AudioClip clip, float volume = 1)
     {
         var child = new GameObject(clip.name);
         child.transform.SetParent(transform);
         var source = child.AddComponent<AudioSource>();
         source.clip = clip;
+        source.volume = volume;
         source.Play();
         while (source.isPlaying) yield return null;
         Destroy(child);
@@ -52,5 +56,20 @@ public class SoundManager : MonoBehaviour
     public static void Click2()
     {
         Instance.StartCoroutine(Instance.PlayClip(Instance.click2));
+    }
+
+    public static void Coin1()
+    {
+        Instance.StartCoroutine(Instance.PlayClip(Instance.coin1));
+    }
+
+    public static void Explosion()
+    {
+        Instance.StartCoroutine(Instance.PlayClip(Instance.explosion, .5f));
+    }
+
+    public static void Impact4()
+    {
+        Instance.StartCoroutine(Instance.PlayClip(Instance.impact4, .5f));
     }
 }

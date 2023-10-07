@@ -52,6 +52,9 @@ MonoBehaviour:
   musicSource: {fileID: 5061704641403796786}
   click1: {fileID: 8300000, guid: 79e490f7e338fe54aa4ee2278e6d094f, type: 3}
   click2: {fileID: 8300000, guid: b71c5bbb1a2711e44a9e1456174d9cc4, type: 3}
+  coin1: {fileID: 8300000, guid: 210a7bfccc089474fb30f5d432c50386, type: 3}
+  explosion: {fileID: 8300000, guid: 74c855030b3610e41811ede5dc0898d0, type: 3}
+  impact4: {fileID: 8300000, guid: 6fb1bd50d256b504cbddc10f5a394393, type: 3}
 --- !u!82 &5061704641403796786
 AudioSource:
   m_ObjectHideFlags: 0

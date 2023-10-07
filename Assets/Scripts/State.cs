@@ -83,6 +83,7 @@ public class State : MonoBehaviour
             {
                 var newExplosion = Instantiate(explosionPrefab);
                 newExplosion.transform.position = qs[0].transform.position;
+                SoundManager.Explosion();
                 continue;
             }
 
@@ -112,6 +113,8 @@ public class State : MonoBehaviour
                     newQuball.Set(newQData[i]);
                 }
             }
+
+            SoundManager.Impact4();
         }
         else
         {
@@ -119,9 +122,16 @@ public class State : MonoBehaviour
             foreach (var q in quballs)
             {
                 q.DestroyQuball();
-                if (level.QuballValid(q)) continue;
-                var newExplosion = Instantiate(explosionPrefab);
-                newExplosion.transform.position = q.transform.position;
+                if (level.QuballValid(q))
+                {
+                    SoundManager.Coin1();
+                }
+                else
+                {
+                    var newExplosion = Instantiate(explosionPrefab);
+                    newExplosion.transform.position = q.transform.position;
+                    SoundManager.Explosion();
+                }
             }
 
             Destroy(gameObject);
