@@ -13,6 +13,7 @@ public class SwitchLevel : MonoBehaviour
     {
         GetComponent<Button>().onClick.AddListener(() =>
         {
+            SoundManager.Click1();
             if (resetLevelId) Level.LevelId = 0;
             Level.LevelId += levelIdChange;
             SceneManager.LoadScene(sceneName);

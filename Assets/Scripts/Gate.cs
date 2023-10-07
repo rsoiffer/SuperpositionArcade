@@ -35,6 +35,7 @@ public class Gate : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         transform.SetParent(transform.root);
         transform.SetAsLastSibling();
         image.raycastTarget = false;
+        SoundManager.Click1();
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -49,6 +50,7 @@ public class Gate : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         if (!isDraggable) return;
         if (slot == null)
         {
+            SoundManager.Click2();
             Destroy(gameObject);
             return;
         }
@@ -56,6 +58,7 @@ public class Gate : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         transform.SetParent(slot);
         transform.localPosition = Vector3.zero;
         image.raycastTarget = true;
+        SoundManager.Click2();
     }
 
     public void BlockDragging()

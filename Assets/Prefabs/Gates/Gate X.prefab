@@ -65,6 +65,9 @@ MonoBehaviour:
   type: 0
   isDraggable: 1
   notDraggableColor: {r: 0.6509804, g: 0.25490198, b: 0.23529412, a: 1}
+  onBeginDrag: {fileID: 0}
+  onEndDragSuccess: {fileID: 0}
+  onEndDragFail: {fileID: 0}
 --- !u!1 &7031453596375841449
 GameObject:
   m_ObjectHideFlags: 0

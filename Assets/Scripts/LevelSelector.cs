@@ -14,6 +14,7 @@ public class LevelSelect : MonoBehaviour
     {
         GetComponent<Button>().onClick.AddListener(() =>
         {
+            SoundManager.Click1();
             levelSelectUI.SetActive(true);
             for (var i = 0; i < levelDefs.childCount; i++)
             {

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4754828971890178918}
   - component: {fileID: 5061704641403796786}
   m_Layer: 0
-  m_Name: Music
+  m_Name: Sound Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,12 +45,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1126cd3dc38b77741bc780c833956d54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clips:
-  - {fileID: 8300000, guid: 64c397cb5cf6323478149b329096ab90, type: 3}
+  musicClips:
   - {fileID: 8300000, guid: 8dc8f47e9a7884845bc336111467c597, type: 3}
   - {fileID: 8300000, guid: e92bb9d86ed2c7541bbc78a602dc5531, type: 3}
   - {fileID: 8300000, guid: 67813957fce5a924eb1a535d1da38ef3, type: 3}
-  audioSource: {fileID: 5061704641403796786}
+  musicSource: {fileID: 5061704641403796786}
+  click1: {fileID: 8300000, guid: 79e490f7e338fe54aa4ee2278e6d094f, type: 3}
+  click2: {fileID: 8300000, guid: b71c5bbb1a2711e44a9e1456174d9cc4, type: 3}
 --- !u!82 &5061704641403796786
 AudioSource:
   m_ObjectHideFlags: 0

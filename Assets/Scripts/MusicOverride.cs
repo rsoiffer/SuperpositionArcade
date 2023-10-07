@@ -9,18 +9,19 @@ public class MusicOverride : MonoBehaviour
 
     private void Awake()
     {
-        _oldVolume = Music.Instance.audioSource.volume;
+        _oldVolume = SoundManager.Instance.musicSource.volume;
     }
 
     private void Update()
     {
         var targetVolume = audioSource.isPlaying ? newVolume : _oldVolume;
-        Music.Instance.audioSource.volume =
-            Mathf.Lerp(targetVolume, Music.Instance.audioSource.volume, Mathf.Exp(-Time.deltaTime * volumeDecay));
+        SoundManager.Instance.musicSource.volume =
+            Mathf.Lerp(targetVolume, SoundManager.Instance.musicSource.volume,
+                Mathf.Exp(-Time.deltaTime * volumeDecay));
     }
 
     private void OnDisable()
     {
-        Music.Instance.audioSource.volume = _oldVolume;
+        SoundManager.Instance.musicSource.volume = _oldVolume;
     }
 }

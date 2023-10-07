@@ -2650,7 +2650,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 250, y: 0}
-  m_SizeDelta: {x: 991, y: 0}
+  m_SizeDelta: {x: 982, y: 0}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1015143136
 MonoBehaviour:
@@ -2859,8 +2859,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 620.5, y: 0}
-  m_SizeDelta: {x: 1241, y: 0}
+  m_AnchoredPosition: {x: 616, y: 0}
+  m_SizeDelta: {x: 1232, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1082932797
 MonoBehaviour:
@@ -2963,7 +2963,7 @@ PrefabInstance:
     - target: {fileID: 4068536794696908703, guid: fa40e66a5872b83468fd4a2d12286c34,
         type: 3}
       propertyPath: m_Name
-      value: Music
+      value: Sound Manager
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

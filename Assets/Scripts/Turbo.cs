@@ -15,8 +15,9 @@ public class Turbo : MonoBehaviour
     {
         button.onClick.AddListener(() =>
         {
-            if (!activeNow)
-                StartCoroutine(RunTurbo());
+            if (activeNow) return;
+            SoundManager.Click1();
+            StartCoroutine(RunTurbo());
         });
     }
 
