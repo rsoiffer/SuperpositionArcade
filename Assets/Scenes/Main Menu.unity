@@ -1857,7 +1857,7 @@ MonoBehaviour:
   levelButtonParent: {fileID: 589465476}
   levelButtonPrefab: {fileID: 6261573583016780116, guid: 9c7109378a94b304ca43235bae5a83fe,
     type: 3}
-  levelDefs: {fileID: 8528492078338528565, guid: b94c2f628e3b30942a2eac995c217de7,
+  levelDefs: {fileID: 2924458639260421999, guid: b94c2f628e3b30942a2eac995c217de7,
     type: 3}
 --- !u!1 &1295585813
 GameObject:

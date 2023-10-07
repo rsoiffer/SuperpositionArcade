@@ -39,8 +39,7 @@ public class LevelDefinition : MonoBehaviour
             var parts = variant.Split(" ");
             StartStates.Add(int.Parse(parts[0]));
             GoalStates.Add(int.Parse(parts[1]));
-            if (parts.Length >= 3)
-                GoalPhases.Add(float.Parse(parts[2]));
+            GoalPhases.Add(parts.Length < 3 ? 0 : float.Parse(parts[2]));
         }
 
         foreach (var code in defPlaceable.Split(" ")) GatesPlaceable.Add(DecodeGate(code));
@@ -77,9 +76,7 @@ public class LevelDefinition : MonoBehaviour
     public QData GoalData(int variant)
     {
         var goalState = GoalStates[variant];
-        var goalAmplitude = GoalPhases.Count == 0
-            ? Complex.One
-            : Complex.FromPolarCoordinates(1, 2 * Mathf.PI * GoalPhases[variant]);
+        var goalAmplitude = Complex.FromPolarCoordinates(1, 2 * Mathf.PI * GoalPhases[variant]);
         return new QData(goalState, goalAmplitude);
     }
 }

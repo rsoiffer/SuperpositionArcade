@@ -83,8 +83,7 @@ public class Level : MonoBehaviour
             bucket.variant = matchingGoal;
             var phaseColorer = bucket.GetComponent<PhaseColorer>();
             phaseColorer.variant = matchingGoal < 0 ? 0 : matchingGoal;
-            if (matchingGoal >= 0 && matchingGoal < _def.GoalPhases.Count)
-                phaseColorer.phase = _def.GoalPhases[matchingGoal];
+            if (matchingGoal >= 0) phaseColorer.phase = _def.GoalPhases[matchingGoal];
 
             var matchingStart = _def.StartStates.FindIndex(s => s == state);
             var cannon = Instantiate(matchingStart >= 0 ? cannonYesPrefab : cannonNoPrefab, cannonsParent);
@@ -235,8 +234,8 @@ public class Level : MonoBehaviour
 
     public bool QuballValid(Quball q)
     {
-        var goalState = _def.GoalStates[q.variant];
-        return q.current.State == goalState;
+        var goalData = _def.GoalData(q.variant);
+        return q.current.Dot(goalData).Real > .9f;
     }
 
     public void StateHitBottom(State state)

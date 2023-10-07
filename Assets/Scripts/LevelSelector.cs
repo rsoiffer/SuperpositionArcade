@@ -8,7 +8,7 @@ public class LevelSelect : MonoBehaviour
     public GameObject levelSelectUI;
     public Transform levelButtonParent;
     public SwitchLevel levelButtonPrefab;
-    public Transform levelDefs;
+    public LevelDefinitionList levelDefs;
 
     private void Start()
     {
@@ -16,9 +16,9 @@ public class LevelSelect : MonoBehaviour
         {
             SoundManager.Click1();
             levelSelectUI.SetActive(true);
-            for (var i = 0; i < levelDefs.childCount; i++)
+            for (var i = 0; i < levelDefs.AllDefs.Length; i++)
             {
-                var def = levelDefs.GetChild(i).GetComponent<LevelDefinition>();
+                var def = levelDefs.AllDefs[i];
                 var newLevelButton = Instantiate(levelButtonPrefab, levelButtonParent);
                 newLevelButton.levelIdChange = i;
                 newLevelButton.GetComponentInChildren<TextMeshProUGUI>().text = def.LevelName;
