@@ -107,6 +107,10 @@ MonoBehaviour:
   collapsePreempt: 0.15
   explosionPrefab: {fileID: 4738348253954454611, guid: dd690395baf4f3749a37e99d13a65f3b,
     type: 3}
+  successPrefab: {fileID: 4738348253954454611, guid: 5ac4664fd39e08c40a8bca48a7049aad,
+    type: 3}
+  bouncePrefab: {fileID: 4738348253954454611, guid: 64d80c9af186e5f43843aab77b948879,
+    type: 3}
   variant: 0
   time: 0
   quballs: []

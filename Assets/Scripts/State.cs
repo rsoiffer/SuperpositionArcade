@@ -12,6 +12,8 @@ public class State : MonoBehaviour
     public Level level;
     public float collapsePreempt = .2f;
     public GameObject explosionPrefab;
+    public GameObject successPrefab;
+    public GameObject bouncePrefab;
 
     public int variant;
     public float time;
@@ -134,6 +136,9 @@ public class State : MonoBehaviour
                     newQuball.Set(q.previous);
                     newQuball.Set(newQData[i]);
                 }
+
+                var newBounce = Instantiate(bouncePrefab);
+                newBounce.transform.position = q.transform.position;
             }
 
             SoundManager.Impact4();
@@ -147,6 +152,8 @@ public class State : MonoBehaviour
                 if (level.QuballValid(q))
                 {
                     SoundManager.Coin1();
+                    var newSuccess = Instantiate(successPrefab);
+                    newSuccess.transform.position = q.transform.position;
                 }
                 else
                 {
