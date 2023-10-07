@@ -13,6 +13,7 @@ public class Peg : MonoBehaviour
 
     public Image imageBase;
     public Image imageX;
+    public Image imageY;
     public Image imageZ;
     public Image imageH;
 
@@ -56,6 +57,7 @@ public class Peg : MonoBehaviour
 
         imageBase.gameObject.SetActive(false);
         imageX.gameObject.SetActive(false);
+        imageY.gameObject.SetActive(false);
         imageZ.gameObject.SetActive(false);
         imageH.gameObject.SetActive(false);
 
@@ -71,6 +73,14 @@ public class Peg : MonoBehaviour
             return;
         }
 
+        if (gates.Any(g => g != null && g.type == GateType.Y))
+        {
+            imageY.gameObject.SetActive(true);
+            var (_, lastDim) = gates.Select((g, i) => (g, i)).Last(x => x.g != null && x.g.type == GateType.Y);
+            imageY.transform.localScale = new Vector3((state & (1 << lastDim)) != 0 ? -1 : 1, 1, 1);
+            return;
+        }
+
         if (gates.Any(g => g != null && g.type == GateType.X))
         {
             imageX.gameObject.SetActive(true);
@@ -81,6 +91,20 @@ public class Peg : MonoBehaviour
 
         if (gates.Select((g, i) => (g, i))
                 .Count(x => x.g != null && x.g.type == GateType.Z && (state & (1 << x.i)) != 0) % 2 == 1)
+        {
+            imageZ.gameObject.SetActive(true);
+            return;
+        }
+
+        if (gates.Select((g, i) => (g, i))
+                .Count(x => x.g != null && x.g.type == GateType.S && (state & (1 << x.i)) != 0) % 2 == 1)
+        {
+            imageZ.gameObject.SetActive(true);
+            return;
+        }
+
+        if (gates.Select((g, i) => (g, i))
+                .Count(x => x.g != null && x.g.type == GateType.T && (state & (1 << x.i)) != 0) % 2 == 1)
         {
             imageZ.gameObject.SetActive(true);
             return;

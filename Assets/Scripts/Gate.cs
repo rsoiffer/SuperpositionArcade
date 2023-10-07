@@ -7,7 +7,10 @@ using UnityEngine.UI;
 public enum GateType
 {
     X,
+    Y,
     Z,
+    S,
+    T,
     H,
     Control
 }
