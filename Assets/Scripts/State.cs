@@ -102,6 +102,28 @@ public class State : MonoBehaviour
         if (row < level.numRows)
         {
             var gates = level.Gates(row);
+
+            for (var dim = 0; dim < gates.Count; dim++)
+            {
+                if (gates[dim] == null) continue;
+                if (gates[dim].type != GateType.Measure && gates[dim].type != GateType.Reset) continue;
+                var prob1 = quballs.Sum(q => q.current.Bit(dim) ? q.current.Probability : 0);
+                var measure1 = Random.value < prob1;
+                foreach (var q in quballs.ToList())
+                    if (q.current.Bit(dim) != measure1)
+                    {
+                        q.DestroyQuball();
+                        var newExplosion = Instantiate(explosionPrefab);
+                        newExplosion.transform.position = q.transform.position;
+                        SoundManager.Explosion();
+                    }
+                    else
+                    {
+                        q.Set(new QData(q.current.State,
+                            q.current.Amplitude / Mathf.Sqrt(measure1 ? prob1 : 1 - prob1)));
+                    }
+            }
+
             foreach (var q in quballs.ToList())
             {
                 var newQData = q.current.ApplyGateRow(gates);

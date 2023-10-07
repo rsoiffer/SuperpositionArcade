@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class QData
 {
@@ -17,6 +18,8 @@ public class QData
 
     public float Magnitude => (float)Amplitude.Magnitude;
     public float Phase => (float)Amplitude.Phase / (2 * Mathf.PI);
+
+    public float Probability => Magnitude * Magnitude;
 
     public bool Bit(int i)
     {
@@ -58,6 +61,14 @@ public class QData
                         result = result.SelectMany(q => q.GateH(dim)).ToList();
                         break;
                     case GateType.Control:
+                        break;
+                    case GateType.Measure:
+                        break;
+                    case GateType.Reset:
+                        result = result.Select(q => new QData(q.State & (-1 - (1 << dim)), q.Amplitude)).ToList();
+                        break;
+                    case GateType.RandomX:
+                        if (Random.value < .5f) result = result.SelectMany(q => q.GateX(dim)).ToList();
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();

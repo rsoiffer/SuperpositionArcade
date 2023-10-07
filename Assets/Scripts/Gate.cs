@@ -12,7 +12,10 @@ public enum GateType
     S,
     T,
     H,
-    Control
+    Control,
+    Measure,
+    Reset,
+    RandomX
 }
 
 public class Gate : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
