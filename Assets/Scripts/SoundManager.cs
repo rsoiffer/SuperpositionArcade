@@ -29,7 +29,7 @@ public class SoundManager : MonoBehaviour
 
     private void Update()
     {
-        if (!musicSource.isPlaying)
+        if (!musicSource.isPlaying && Application.isFocused)
         {
             musicSource.clip = musicClips[Random.Range(0, musicClips.Count)];
             musicSource.Play();
