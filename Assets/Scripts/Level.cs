@@ -12,7 +12,7 @@ public class Level : MonoBehaviour
 {
     public static int LevelId;
 
-    [Header("General")] public Transform levelDefs;
+    [Header("General")] public LevelDefinitionList levelDefs;
     public int numRows = 2;
     public TextMeshProUGUI titleText;
 
@@ -61,14 +61,15 @@ public class Level : MonoBehaviour
     private bool scrollRectChanged;
     private GateSlot[,] slotGrid;
 
-    public int NumBits => _def.numBits;
+    public int NumBits => _def.NumBits;
 
     public float VictoryPercent => Mathf.Clamp01(victoryProgress / victoryThreshold);
 
     private void Start()
     {
-        LevelId = Mathf.Clamp(LevelId, 0, levelDefs.childCount - 1);
-        _def = levelDefs.GetChild(LevelId).GetComponent<LevelDefinition>();
+        LevelId = Mathf.Clamp(LevelId, 0, levelDefs.AllDefs.Length - 1);
+        _def = levelDefs.AllDefs[LevelId];
+        _def.Parse();
         titleText.text = _def.LevelName;
 
         slotGrid = new GateSlot[NumBits, numRows];
@@ -76,21 +77,21 @@ public class Level : MonoBehaviour
 
         for (var state = 0; state < 1 << NumBits; state++)
         {
-            var matchingGoal = _def.goalStates.FindIndex(s => s == state);
+            var matchingGoal = _def.GoalStates.FindIndex(s => s == state);
             var bucket = Instantiate(matchingGoal >= 0 ? bucketYesPrefab : bucketNoPrefab, bucketsParent);
             bucket.level = this;
             bucket.variant = matchingGoal;
             var phaseColorer = bucket.GetComponent<PhaseColorer>();
             phaseColorer.variant = matchingGoal < 0 ? 0 : matchingGoal;
-            if (matchingGoal >= 0 && matchingGoal < _def.goalPhases.Count)
-                phaseColorer.phase = _def.goalPhases[matchingGoal];
+            if (matchingGoal >= 0 && matchingGoal < _def.GoalPhases.Count)
+                phaseColorer.phase = _def.GoalPhases[matchingGoal];
 
-            var matchingStart = _def.startStates.FindIndex(s => s == state);
+            var matchingStart = _def.StartStates.FindIndex(s => s == state);
             var cannon = Instantiate(matchingStart >= 0 ? cannonYesPrefab : cannonNoPrefab, cannonsParent);
             cannon.level = this;
             cannon.variant = matchingStart;
             var phaseColorerCannon = cannon.GetComponent<PhaseColorer>();
-            phaseColorerCannon.variant = matchingGoal < 0 ? 0 : matchingGoal;
+            phaseColorerCannon.variant = matchingStart < 0 ? 0 : matchingStart;
 
             foreach (var bucketTextParent in bucketTextParents)
             {
@@ -118,25 +119,25 @@ public class Level : MonoBehaviour
             slotGrid[dim, row] = newGateSlot;
         }
 
-        for (var i = 0; i < _def.gatesBefore.Count; i++)
+        for (var i = 0; i < _def.GatesBefore.Count; i++)
         {
             var gateSlot = commandGrid.transform.GetChild(NumBits + i);
             gateSlot.GetComponent<GateSlot>().BlockDragging();
-            if (_def.gatesBefore[i] == null) continue;
-            var newGate = Instantiate(_def.gatesBefore[i], gateSlot);
+            if (_def.GatesBefore[i] == null) continue;
+            var newGate = Instantiate(_def.GatesBefore[i], gateSlot);
             newGate.BlockDragging();
         }
 
-        for (var i = 0; i < _def.gatesAfter.Count; i++)
+        for (var i = 0; i < _def.GatesAfter.Count; i++)
         {
             var gateSlot = commandGrid.transform.GetChild(commandGrid.transform.childCount - 1 - i);
             gateSlot.GetComponent<GateSlot>().BlockDragging();
-            if (_def.gatesAfter[i] == null) continue;
-            var newGate = Instantiate(_def.gatesAfter[i], gateSlot);
+            if (_def.GatesAfter[i] == null) continue;
+            var newGate = Instantiate(_def.GatesAfter[i], gateSlot);
             newGate.BlockDragging();
         }
 
-        foreach (var gate in _def.gatesPlaceable) Instantiate(gate, sourceGrid.transform);
+        foreach (var gate in _def.GatesPlaceable) Instantiate(gate, sourceGrid.transform);
 
         pegGridParent.constraintCount = 1 << NumBits;
         for (var state = 0; state < 1 << NumBits; state++) Instantiate(pegEmptyPrefab, pegGridParent.transform);
@@ -222,10 +223,10 @@ public class Level : MonoBehaviour
             {
                 spawnCooldown = 1;
                 var newState = Instantiate(statePrefab, objectsParent);
-                var variant = Random.Range(0, _def.startStates.Count);
+                var variant = Random.Range(0, _def.StartStates.Count);
                 newState.level = this;
                 newState.variant = variant;
-                newState.ResetToState(_def.startStates[variant]);
+                newState.ResetToState(_def.StartStates[variant]);
             }
 
             yield return null;
@@ -234,7 +235,7 @@ public class Level : MonoBehaviour
 
     public bool QuballValid(Quball q)
     {
-        var goalState = _def.goalStates[q.variant];
+        var goalState = _def.GoalStates[q.variant];
         return q.current.State == goalState;
     }
 

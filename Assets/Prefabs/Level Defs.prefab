@@ -44,15 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c95d9ded044e058702e9e3ffcf97a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ldl: {fileID: 2924458639260421999}
   numBits: 1
-  startStates: 00000000
-  goalStates: 00000000
-  goalPhases: []
-  gatesBefore:
-  - {fileID: 1538031847597037132, guid: 600735dd44b0e7e478f40807c93a0643, type: 3}
-  gatesAfter: []
-  gatesPlaceable:
-  - {fileID: 1538031847597037132, guid: 600735dd44b0e7e478f40807c93a0643, type: 3}
+  defGoals: 0 0
+  defPlaceable: X
+  defBefore: X
+  defAfter: 
 --- !u!1 &2064367587194794636
 GameObject:
   m_ObjectHideFlags: 0
@@ -62,6 +59,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8528492078338528565}
+  - component: {fileID: 2924458639260421999}
   m_Layer: 0
   m_Name: Level Defs
   m_TagString: Untagged
@@ -89,9 +87,31 @@ Transform:
   - {fileID: 3859746340254998645}
   - {fileID: 1444397314999974359}
   - {fileID: 8422051919360483405}
-  - {fileID: 1256781736182159553}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2924458639260421999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2064367587194794636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3de86a8c61ae2bb4483a1fd810a468e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allGates:
+  - {fileID: 5533708170616851240, guid: 9fd3c995f6674ab4ca993a8c49d63d27, type: 3}
+  - {fileID: 6423569070495509838, guid: 0f6758c881c56b64698574401ecff4d2, type: 3}
+  - {fileID: 5533708170616851240, guid: 455b728c61152f44590175dbfb2e6168, type: 3}
+  - {fileID: 5533708170616851240, guid: 9d9b81e5195e6a940bc52352ca6763a3, type: 3}
+  - {fileID: 5533708170616851240, guid: f6cce2eb20bcd2e4ba8e4001537a6c36, type: 3}
+  - {fileID: 5533708170616851240, guid: 55bbc66e8b479cb43b1f0bd0098571bd, type: 3}
+  - {fileID: 5533708170616851240, guid: 588321011625f8048880967b7d0446c9, type: 3}
+  - {fileID: 1538031847597037132, guid: 600735dd44b0e7e478f40807c93a0643, type: 3}
+  - {fileID: 5533708170616851240, guid: e45800603f998b8479387a1e73d60fbc, type: 3}
+  - {fileID: 5533708170616851240, guid: 308de3e7d63390144b22400a930c457a, type: 3}
 --- !u!1 &2913947207796907810
 GameObject:
   m_ObjectHideFlags: 0
@@ -136,18 +156,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c95d9ded044e058702e9e3ffcf97a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ldl: {fileID: 2924458639260421999}
   numBits: 2
-  startStates: 01000000
-  goalStates: 03000000
-  goalPhases: []
-  gatesBefore:
-  - {fileID: 0}
-  - {fileID: 6423569070495509838, guid: 0f6758c881c56b64698574401ecff4d2, type: 3}
-  gatesAfter: []
-  gatesPlaceable:
-  - {fileID: 1538031847597037132, guid: 600735dd44b0e7e478f40807c93a0643, type: 3}
-  - {fileID: 5533708170616851240, guid: 308de3e7d63390144b22400a930c457a, type: 3}
-  - {fileID: 6423569070495509838, guid: 0f6758c881c56b64698574401ecff4d2, type: 3}
+  defGoals: 1 3
+  defPlaceable: X H
+  defBefore: _ H
+  defAfter: 
 --- !u!1 &5825457198390293240
 GameObject:
   m_ObjectHideFlags: 0
@@ -192,15 +206,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c95d9ded044e058702e9e3ffcf97a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ldl: {fileID: 2924458639260421999}
   numBits: 2
-  startStates: 00000000010000000200000003000000
-  goalStates: 00000000020000000100000003000000
-  goalPhases: []
-  gatesBefore: []
-  gatesAfter: []
-  gatesPlaceable:
-  - {fileID: 1538031847597037132, guid: 600735dd44b0e7e478f40807c93a0643, type: 3}
-  - {fileID: 5533708170616851240, guid: 9fd3c995f6674ab4ca993a8c49d63d27, type: 3}
+  defGoals: '0 0
+
+    1 2
+
+    2 1
+
+    3 3'
+  defPlaceable: X C
+  defBefore: 
+  defAfter: 
 --- !u!1 &6001254033485247304
 GameObject:
   m_ObjectHideFlags: 0
@@ -245,18 +262,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c95d9ded044e058702e9e3ffcf97a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ldl: {fileID: 2924458639260421999}
   numBits: 2
-  startStates: 01000000
-  goalStates: 03000000
-  goalPhases: []
-  gatesBefore: []
-  gatesAfter:
-  - {fileID: 6423569070495509838, guid: 0f6758c881c56b64698574401ecff4d2, type: 3}
-  - {fileID: 0}
-  gatesPlaceable:
-  - {fileID: 1538031847597037132, guid: 600735dd44b0e7e478f40807c93a0643, type: 3}
-  - {fileID: 5533708170616851240, guid: 308de3e7d63390144b22400a930c457a, type: 3}
-  - {fileID: 6423569070495509838, guid: 0f6758c881c56b64698574401ecff4d2, type: 3}
+  defGoals: 1 3
+  defPlaceable: X H
+  defBefore: 
+  defAfter: _ H
 --- !u!1 &6050785624524867021
 GameObject:
   m_ObjectHideFlags: 0
@@ -301,71 +312,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c95d9ded044e058702e9e3ffcf97a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ldl: {fileID: 2924458639260421999}
   numBits: 3
-  startStates: 02000000
-  goalStates: 04000000
-  goalPhases: []
-  gatesBefore: []
-  gatesAfter: []
-  gatesPlaceable:
-  - {fileID: 1538031847597037132, guid: 600735dd44b0e7e478f40807c93a0643, type: 3}
---- !u!1 &7956151996267228932
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1256781736182159553}
-  - component: {fileID: 3489812127289469285}
-  m_Layer: 0
-  m_Name: Measure
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1256781736182159553
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7956151996267228932}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8528492078338528565}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3489812127289469285
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7956151996267228932}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04c95d9ded044e058702e9e3ffcf97a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  numBits: 2
-  startStates: 01000000
-  goalStates: 03000000
-  goalPhases: []
-  gatesBefore: []
-  gatesAfter: []
-  gatesPlaceable:
-  - {fileID: 1538031847597037132, guid: 600735dd44b0e7e478f40807c93a0643, type: 3}
-  - {fileID: 5533708170616851240, guid: 308de3e7d63390144b22400a930c457a, type: 3}
-  - {fileID: 6423569070495509838, guid: 0f6758c881c56b64698574401ecff4d2, type: 3}
-  - {fileID: 5533708170616851240, guid: 455b728c61152f44590175dbfb2e6168, type: 3}
-  - {fileID: 5533708170616851240, guid: 9d9b81e5195e6a940bc52352ca6763a3, type: 3}
-  - {fileID: 5533708170616851240, guid: f6cce2eb20bcd2e4ba8e4001537a6c36, type: 3}
+  defGoals: 2 4
+  defPlaceable: X
+  defBefore: 
+  defAfter: 
 --- !u!1 &8381791920487042597
 GameObject:
   m_ObjectHideFlags: 0
@@ -410,14 +362,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c95d9ded044e058702e9e3ffcf97a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ldl: {fileID: 2924458639260421999}
   numBits: 1
-  startStates: 00000000
-  goalStates: 01000000
-  goalPhases: []
-  gatesBefore: []
-  gatesAfter: []
-  gatesPlaceable:
-  - {fileID: 1538031847597037132, guid: 600735dd44b0e7e478f40807c93a0643, type: 3}
+  defGoals: "0 1\t"
+  defPlaceable: X
+  defBefore: 
+  defAfter: 
 --- !u!1 &9098340953040073891
 GameObject:
   m_ObjectHideFlags: 0
@@ -462,12 +412,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c95d9ded044e058702e9e3ffcf97a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ldl: {fileID: 2924458639260421999}
   numBits: 1
-  startStates: 00000000
-  goalStates: 00000000
-  goalPhases: []
-  gatesBefore:
-  - {fileID: 6423569070495509838, guid: 0f6758c881c56b64698574401ecff4d2, type: 3}
-  gatesAfter: []
-  gatesPlaceable:
-  - {fileID: 6423569070495509838, guid: 0f6758c881c56b64698574401ecff4d2, type: 3}
+  defGoals: 0 0
+  defPlaceable: H
+  defBefore: H
+  defAfter: 

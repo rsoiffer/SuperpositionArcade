@@ -85,6 +85,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1538031847597037132, guid: 600735dd44b0e7e478f40807c93a0643,
         type: 3}
+      propertyPath: code
+      value: C
+      objectReference: {fileID: 0}
+    - target: {fileID: 1538031847597037132, guid: 600735dd44b0e7e478f40807c93a0643,
+        type: 3}
       propertyPath: type
       value: 6
       objectReference: {fileID: 0}

@@ -25,6 +25,7 @@ public class Gate : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     public GateType type;
     public bool isDraggable = true;
     public Color notDraggableColor;
+    public string code;
 
     public void OnBeginDrag(PointerEventData eventData)
     {
