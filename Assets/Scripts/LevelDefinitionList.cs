@@ -1,6 +1,8 @@
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class LevelDefinitionList : MonoBehaviour
 {
@@ -8,6 +10,7 @@ public class LevelDefinitionList : MonoBehaviour
     public LevelDefinition[] AllDefs => GetComponentsInChildren<LevelDefinition>();
 }
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(LevelDefinitionList))]
 public class LevelDefinitionListEditor : Editor
 {
@@ -24,3 +27,4 @@ public class LevelDefinitionListEditor : Editor
                     Debug.LogError($"Failed to verify solution for {def.name}");
     }
 }
+#endif
