@@ -6,16 +6,18 @@ using UnityEngine.UI;
 [Serializable]
 public enum GateType
 {
-    X,
-    Y,
-    Z,
-    S,
-    T,
-    H,
-    Control,
-    Measure,
-    Reset,
-    RandomX
+    X = 0,
+    Y = 1,
+    Z = 2,
+    S = 3,
+    Sa = 10,
+    T = 4,
+    Ta = 11,
+    H = 5,
+    Control = 6,
+    Measure = 7,
+    Reset = 8,
+    RandomX = 9
 }
 
 public class Gate : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler

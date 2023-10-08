@@ -101,7 +101,7 @@ public class State : MonoBehaviour
         foreach (var q in quballs) q.Step();
 
         var row = Mathf.FloorToInt(time) - 1;
-        if (row < level.numRows)
+        if (row < level.NumRows)
         {
             var gates = level.Gates(row);
 

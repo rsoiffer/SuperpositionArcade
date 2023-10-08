@@ -54,8 +54,14 @@ public class QData
                     case GateType.S:
                         result = result.SelectMany(q => q.GateS(dim)).ToList();
                         break;
+                    case GateType.Sa:
+                        result = result.SelectMany(q => q.GateSa(dim)).ToList();
+                        break;
                     case GateType.T:
                         result = result.SelectMany(q => q.GateT(dim)).ToList();
+                        break;
+                    case GateType.Ta:
+                        result = result.SelectMany(q => q.GateTa(dim)).ToList();
                         break;
                     case GateType.H:
                         result = result.SelectMany(q => q.GateH(dim)).ToList();
@@ -98,9 +104,19 @@ public class QData
         yield return new QData(State, Amplitude * (Bit(dim) ? Complex.ImaginaryOne : 1));
     }
 
+    public IEnumerable<QData> GateSa(int dim)
+    {
+        yield return new QData(State, Amplitude * (Bit(dim) ? -Complex.ImaginaryOne : 1));
+    }
+
     public IEnumerable<QData> GateT(int dim)
     {
-        yield return new QData(State, Amplitude * (Bit(dim) ? Complex.Exp(Mathf.PI / 4) : 1));
+        yield return new QData(State, Amplitude * (Bit(dim) ? Complex.Exp(Complex.ImaginaryOne * Mathf.PI / 4) : 1));
+    }
+
+    public IEnumerable<QData> GateTa(int dim)
+    {
+        yield return new QData(State, Amplitude * (Bit(dim) ? Complex.Exp(-Complex.ImaginaryOne * Mathf.PI / 4) : 1));
     }
 
     public IEnumerable<QData> GateH(int dim)

@@ -50,7 +50,7 @@ public class Quball : MonoBehaviour
         phaseColorer.variant = variant;
         phaseColorer.phase = current.Phase;
         transform.localScale = baseScale * Mathf.Pow(current.Magnitude, scalePower);
-        for (var i = 0; i < variants.Count; i++) variants[i].SetActive(i == variant);
+        for (var i = 0; i < variants.Count; i++) variants[i].SetActive(i == variant % variants.Count);
     }
 
     public void DestroyQuball()

@@ -16,6 +16,6 @@ public class Bucket : MonoBehaviour
         if (!isYes) return;
         if (fill != null)
             fill.offsetMax = new Vector2(0, maxFillHeight * level.VictoryPercent);
-        for (var i = 0; i < variants.Count; i++) variants[i].SetActive(i == variant);
+        for (var i = 0; i < variants.Count; i++) variants[i].SetActive(i == variant % variants.Count);
     }
 }

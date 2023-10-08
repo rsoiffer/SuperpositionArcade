@@ -13,7 +13,6 @@ public class Level : MonoBehaviour
     public static int LevelId;
 
     [Header("General")] public LevelDefinitionList levelDefs;
-    public int numRows = 2;
     public TextMeshProUGUI titleText;
 
     [Header("Buckets")] public Transform bucketsParent;
@@ -62,6 +61,7 @@ public class Level : MonoBehaviour
     private GateSlot[,] slotGrid;
 
     public int NumBits => _def.NumBits;
+    public int NumRows => _def.NumRows;
 
     public float VictoryPercent => Mathf.Clamp01(victoryProgress / victoryThreshold);
 
@@ -72,8 +72,8 @@ public class Level : MonoBehaviour
         _def.Parse();
         titleText.text = _def.LevelName;
 
-        slotGrid = new GateSlot[NumBits, numRows];
-        pegGrid = new Peg[1 << NumBits, numRows];
+        slotGrid = new GateSlot[NumBits, NumRows];
+        pegGrid = new Peg[1 << NumBits, NumRows];
 
         for (var state = 0; state < 1 << NumBits; state++)
         {
@@ -111,7 +111,7 @@ public class Level : MonoBehaviour
             tmp.text = $"<color={ToRGBHex(dimensionsColors[dim])}>{dimensionsAlphabet[dim]}</color>";
         }
 
-        for (var row = 0; row < numRows; row++)
+        for (var row = 0; row < NumRows; row++)
         for (var dim = 0; dim < NumBits; dim++)
         {
             var newGateSlot = Instantiate(gateSlotPrefab, commandGrid.transform);
@@ -140,7 +140,7 @@ public class Level : MonoBehaviour
 
         pegGridParent.constraintCount = 1 << NumBits;
         for (var state = 0; state < 1 << NumBits; state++) Instantiate(pegEmptyPrefab, pegGridParent.transform);
-        for (var row = 0; row < numRows; row++)
+        for (var row = 0; row < NumRows; row++)
         for (var state = 0; state < 1 << NumBits; state++)
         {
             var newPeg = Instantiate(pegPrefab, pegGridParent.transform);
@@ -173,24 +173,7 @@ public class Level : MonoBehaviour
     {
         updateAfterFrames -= 1;
 
-        var newGateGrid = new Gate[NumBits, numRows];
-        for (var dim = 0; dim < NumBits; dim++)
-        for (var row = 0; row < numRows; row++)
-            newGateGrid[dim, row] = slotGrid[dim, row].GetComponentInChildren<Gate>();
-
-        var newScreenSize = (Screen.width, Screen.height);
-
-        if (!SequenceEquals(newGateGrid, gateGrid) || newScreenSize != prevScreenSize || updateAfterFrames == 0 ||
-            scrollRectChanged)
-        {
-            gateGrid = newGateGrid;
-            prevScreenSize = newScreenSize;
-            scrollRectChanged = false;
-
-            for (var row = 0; row < numRows; row++)
-            for (var state = 0; state < 1 << NumBits; state++)
-                pegGrid[state, row].UpdateGraphics();
-        }
+        UpdateGateGrid();
 
         var dimSelected = -1;
         for (var dim = 0; dim < NumBits; dim++)
@@ -210,6 +193,64 @@ public class Level : MonoBehaviour
         }
 
         if (VictoryPercent >= 1) victoryUI.SetActive(true);
+    }
+
+    private void UpdateGateGrid()
+    {
+        var newGateGrid = new Gate[NumBits, NumRows];
+        for (var dim = 0; dim < NumBits; dim++)
+        for (var row = 0; row < NumRows; row++)
+            newGateGrid[dim, row] = slotGrid[dim, row].GetComponentInChildren<Gate>();
+
+        var newScreenSize = (Screen.width, Screen.height);
+
+        if (SequenceEquals(newGateGrid, gateGrid)
+            && newScreenSize == prevScreenSize
+            && updateAfterFrames != 0
+            && !scrollRectChanged)
+            return;
+
+        gateGrid = newGateGrid;
+        prevScreenSize = newScreenSize;
+        scrollRectChanged = false;
+
+        for (var row = 0; row < NumRows; row++)
+        for (var state = 0; state < 1 << NumBits; state++)
+            pegGrid[state, row].UpdateGraphics();
+    }
+
+    public void Clear()
+    {
+        for (var dim = 0; dim < NumBits; dim++)
+        for (var row = 0; row < NumRows; row++)
+        {
+            var gate = slotGrid[dim, row].GetComponentInChildren<Gate>();
+            if (gate != null) Destroy(gate.gameObject);
+        }
+
+        UpdateGateGrid();
+    }
+
+    public void Cheat()
+    {
+        Clear();
+
+        var cheatGates = _def.GatesSolution.ToList();
+        var cheatGateId = 0;
+
+        for (var row = 0; row < NumRows; row++)
+        for (var dim = 0; dim < NumBits; dim++)
+        {
+            if (cheatGateId >= cheatGates.Count) continue;
+            var gatePrefab = cheatGates[cheatGateId];
+            cheatGateId++;
+
+            if (gatePrefab == null) continue;
+            var copy = Instantiate(gatePrefab, slotGrid[dim, row].transform);
+            copy.transform.localPosition = Vector3.zero;
+        }
+
+        UpdateGateGrid();
     }
 
     private IEnumerator SpawnCoroutine()
@@ -259,7 +300,7 @@ public class Level : MonoBehaviour
 
     public Vector3 PegPos(int state, int row)
     {
-        var clampedRow = Mathf.Clamp(row, 0, numRows - 1);
+        var clampedRow = Mathf.Clamp(row, 0, NumRows - 1);
         var offset = (clampedRow - row) * new Vector3(0, 200, 0);
         return pegGrid[state, clampedRow].transform.position + offset;
     }

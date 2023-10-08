@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class PhaseColorer : MonoBehaviour
 {
     private static readonly float baseHue = .55f;
-    private static readonly float[] variantBaseHueOffsets = { 0, -.06f, -0.12f, .06f };
+    private static readonly float[] variantBaseHueOffsets = { 0, -.06f, -0.12f, .06f, .12f, .18f, -.18f, -.24f };
 
     [SerializeField] private List<Image> imagesToColor;
     [SerializeField] private List<Renderer> renderersToColor;

@@ -46,12 +46,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ldl: {fileID: 2924458639260421999}
   numBits: 2
+  numRows: 4
   defGoals: '1 1
 
     3 3'
   defPlaceable: X
   defBefore: C X
   defAfter: 
+  defSolution: 
 --- !u!1 &1225535661701502153
 GameObject:
   m_ObjectHideFlags: 0
@@ -98,10 +100,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ldl: {fileID: 2924458639260421999}
   numBits: 1
+  numRows: 4
   defGoals: 1 1 .5
   defPlaceable: X H
   defBefore: 
   defAfter: 
+  defSolution: 
 --- !u!1 &1507145451829032842
 GameObject:
   m_ObjectHideFlags: 0
@@ -190,10 +194,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ldl: {fileID: 2924458639260421999}
   numBits: 2
+  numRows: 4
   defGoals: "0 0 0\t\n1 1 0\n2 2 0\n3 3 .5"
   defPlaceable: Z C
   defBefore: 
   defAfter: 
+  defSolution: 
 --- !u!1 &1867696171128705726
 GameObject:
   m_ObjectHideFlags: 0
@@ -240,10 +246,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ldl: {fileID: 2924458639260421999}
   numBits: 1
+  numRows: 4
   defGoals: 0 0
   defPlaceable: X
   defBefore: X
   defAfter: 
+  defSolution: 
 --- !u!1 &2064367587194794636
 GameObject:
   m_ObjectHideFlags: 0
@@ -298,7 +306,9 @@ MonoBehaviour:
   - {fileID: 5533708170616851240, guid: 9d9b81e5195e6a940bc52352ca6763a3, type: 3}
   - {fileID: 5533708170616851240, guid: f6cce2eb20bcd2e4ba8e4001537a6c36, type: 3}
   - {fileID: 5533708170616851240, guid: 55bbc66e8b479cb43b1f0bd0098571bd, type: 3}
+  - {fileID: 5533708170616851240, guid: 0f8f739cc83dfea45a335d45a8bc9af6, type: 3}
   - {fileID: 5533708170616851240, guid: 588321011625f8048880967b7d0446c9, type: 3}
+  - {fileID: 5533708170616851240, guid: 092387463c26b124995b40d9ddd157e6, type: 3}
   - {fileID: 1538031847597037132, guid: 600735dd44b0e7e478f40807c93a0643, type: 3}
   - {fileID: 5533708170616851240, guid: e45800603f998b8479387a1e73d60fbc, type: 3}
   - {fileID: 5533708170616851240, guid: 308de3e7d63390144b22400a930c457a, type: 3}
@@ -348,10 +358,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ldl: {fileID: 2924458639260421999}
   numBits: 1
+  numRows: 4
   defGoals: 0 0
   defPlaceable: H
   defBefore: H
   defAfter: 
+  defSolution: 
 --- !u!1 &2913947207796907810
 GameObject:
   m_ObjectHideFlags: 0
@@ -398,10 +410,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ldl: {fileID: 2924458639260421999}
   numBits: 2
+  numRows: 4
   defGoals: 1 3
   defPlaceable: X H
   defBefore: _ H
   defAfter: 
+  defSolution: 
 --- !u!1 &3428743639963545237
 GameObject:
   m_ObjectHideFlags: 0
@@ -448,10 +462,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ldl: {fileID: 2924458639260421999}
   numBits: 1
+  numRows: 4
   defGoals: "0 0 .5\t"
   defPlaceable: X Z
   defBefore: 
   defAfter: 
+  defSolution: 
 --- !u!1 &3648098835207170432
 GameObject:
   m_ObjectHideFlags: 0
@@ -498,6 +514,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ldl: {fileID: 2924458639260421999}
   numBits: 2
+  numRows: 4
   defGoals: '0 0
 
     1 2
@@ -508,6 +525,7 @@ MonoBehaviour:
   defPlaceable: X C
   defBefore: 
   defAfter: 
+  defSolution: 
 --- !u!1 &3668446410156609871
 GameObject:
   m_ObjectHideFlags: 0
@@ -554,10 +572,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ldl: {fileID: 2924458639260421999}
   numBits: 2
+  numRows: 4
   defGoals: "0 0 .5\t\n1 1 0\n2 2 0\n3 3 0"
   defPlaceable: X Z C
   defBefore: 
   defAfter: 
+  defSolution: 
 --- !u!1 &3805127662307195530
 GameObject:
   m_ObjectHideFlags: 0
@@ -604,10 +624,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ldl: {fileID: 2924458639260421999}
   numBits: 1
+  numRows: 4
   defGoals: "0 0 .5\t\n1 1 .5"
   defPlaceable: X Z
   defBefore: 
   defAfter: 
+  defSolution: 
 --- !u!1 &4453439877287129314
 GameObject:
   m_ObjectHideFlags: 0
@@ -654,10 +676,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ldl: {fileID: 2924458639260421999}
   numBits: 1
+  numRows: 4
   defGoals: 0 1
   defPlaceable: Z H
   defBefore: 
   defAfter: 
+  defSolution: 
 --- !u!1 &5193685110532393550
 GameObject:
   m_ObjectHideFlags: 0
@@ -704,6 +728,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ldl: {fileID: 2924458639260421999}
   numBits: 2
+  numRows: 4
   defGoals: '0 1
 
     1 0
@@ -714,6 +739,7 @@ MonoBehaviour:
   defPlaceable: X C
   defBefore: 
   defAfter: 
+  defSolution: 
 --- !u!1 &5825457198390293240
 GameObject:
   m_ObjectHideFlags: 0
@@ -760,6 +786,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ldl: {fileID: 2924458639260421999}
   numBits: 2
+  numRows: 4
   defGoals: '0 0
 
     1 1
@@ -770,6 +797,7 @@ MonoBehaviour:
   defPlaceable: X C
   defBefore: 
   defAfter: 
+  defSolution: 
 --- !u!1 &6001254033485247304
 GameObject:
   m_ObjectHideFlags: 0
@@ -816,10 +844,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ldl: {fileID: 2924458639260421999}
   numBits: 2
+  numRows: 4
   defGoals: 1 3
   defPlaceable: X H
   defBefore: 
   defAfter: _ H
+  defSolution: 
 --- !u!1 &6050785624524867021
 GameObject:
   m_ObjectHideFlags: 0
@@ -866,10 +896,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ldl: {fileID: 2924458639260421999}
   numBits: 3
+  numRows: 4
   defGoals: 2 4
   defPlaceable: X
   defBefore: 
   defAfter: 
+  defSolution: 
 --- !u!1 &6191452326705932743
 GameObject:
   m_ObjectHideFlags: 0
@@ -916,10 +948,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ldl: {fileID: 2924458639260421999}
   numBits: 2
+  numRows: 4
   defGoals: 0 0
   defPlaceable: X
   defBefore: _ X
   defAfter: X _
+  defSolution: 
 --- !u!1 &6335545222689838888
 GameObject:
   m_ObjectHideFlags: 0
@@ -948,9 +982,85 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1190723601253676713}
   m_Father: {fileID: 8528492078338528565}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6554624592628743223
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1190723601253676713}
+  - component: {fileID: 1251271959538852463}
+  m_Layer: 0
+  m_Name: Toffoli
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1190723601253676713
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6554624592628743223}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7671411603488549788}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1251271959538852463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6554624592628743223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04c95d9ded044e058702e9e3ffcf97a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ldl: {fileID: 2924458639260421999}
+  numBits: 3
+  numRows: 16
+  defGoals: "0 0\n1 1\n2 2\n3 7\n4 4\n5 5\n6 6\t\n7 3"
+  defPlaceable: X Z T Ta H C
+  defBefore: 
+  defAfter: 
+  defSolution: '_ _ H
+
+    _ C X
+
+    _ _ Ta
+
+    C _ X
+
+    _ _ T
+
+    _ C X
+
+    _
+    _ Ta
+
+    C _ X
+
+    _ T T
+
+    C X _
+
+    T Ta H
+
+    C X _'
 --- !u!1 &7707666799071827791
 GameObject:
   m_ObjectHideFlags: 0
@@ -1036,10 +1146,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ldl: {fileID: 2924458639260421999}
   numBits: 1
+  numRows: 4
   defGoals: "0 1\t"
   defPlaceable: X
   defBefore: 
   defAfter: 
+  defSolution: 
 --- !u!1 &9073276950462772554
 GameObject:
   m_ObjectHideFlags: 0
@@ -1086,6 +1198,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ldl: {fileID: 2924458639260421999}
   numBits: 2
+  numRows: 4
   defGoals: '0 0 0
 
     1 1 .5
@@ -1096,6 +1209,7 @@ MonoBehaviour:
   defPlaceable: Z
   defBefore: 
   defAfter: 
+  defSolution: 
 --- !u!1 &9098340953040073891
 GameObject:
   m_ObjectHideFlags: 0
@@ -1142,7 +1256,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ldl: {fileID: 2924458639260421999}
   numBits: 1
+  numRows: 4
   defGoals: "1 1 .5\t"
   defPlaceable: Z
   defBefore: 
   defAfter: 
+  defSolution: 

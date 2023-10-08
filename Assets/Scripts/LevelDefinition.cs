@@ -8,19 +8,23 @@ public class LevelDefinition : MonoBehaviour
 {
     [SerializeField] private LevelDefinitionList ldl;
     [SerializeField] private int numBits;
+    [SerializeField] private int numRows = 4;
     [TextArea(1, 10)] [SerializeField] private string defGoals;
     [TextArea(1, 10)] [SerializeField] private string defPlaceable;
     [TextArea(1, 10)] [SerializeField] private string defBefore;
     [TextArea(1, 10)] [SerializeField] private string defAfter;
+    [TextArea(1, 10)] [SerializeField] private string defSolution;
 
     [NonSerialized] public List<Gate> GatesAfter;
     [NonSerialized] public List<Gate> GatesBefore;
     [NonSerialized] public List<Gate> GatesPlaceable;
+    [NonSerialized] public List<Gate> GatesSolution;
     [NonSerialized] public List<float> GoalPhases;
     [NonSerialized] public List<int> GoalStates;
     [NonSerialized] public List<int> StartStates;
 
     public int NumBits => numBits;
+    public int NumRows => numRows;
     public string LevelName => name;
 
     public void Parse()
@@ -33,6 +37,7 @@ public class LevelDefinition : MonoBehaviour
         GatesBefore = new List<Gate>();
         GatesAfter = new List<Gate>();
         GatesPlaceable = new List<Gate>();
+        GatesSolution = new List<Gate>();
 
         foreach (var variant in defGoals.Split("\n"))
         {
@@ -61,6 +66,14 @@ public class LevelDefinition : MonoBehaviour
         }
 
         GatesAfter.Reverse();
+
+        foreach (var row in defSolution.Split("\n"))
+        {
+            if (row.Length == 0) continue;
+            var parts = row.Split(" ");
+            if (parts.Length != numBits) throw new InvalidOperationException("Bad parse");
+            foreach (var code in parts) GatesSolution.Add(DecodeGate(code));
+        }
     }
 
     private Gate DecodeGate(string code)
