@@ -84,8 +84,12 @@ public class Peg : MonoBehaviour
         if (gates.Any(g => g != null && g.type == GateType.X))
         {
             imageX.gameObject.SetActive(true);
-            var (_, lastDim) = gates.Select((g, i) => (g, i)).Last(x => x.g != null && x.g.type == GateType.X);
-            imageX.transform.localScale = new Vector3((state & (1 << lastDim)) != 0 ? -1 : 1, 1, 1);
+            var newState = state;
+            for (var dim = 0; dim < gates.Count; dim++)
+                if (gates[dim] != null && gates[dim].type == GateType.X)
+                    newState ^= 1 << dim;
+            imageX.transform.localScale = Mathf.Pow(Mathf.Abs(state - newState), .25f) *
+                                          new Vector3(newState < state ? -1 : 1, 1, 1);
             return;
         }
 

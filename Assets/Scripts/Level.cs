@@ -315,7 +315,7 @@ public class Level : MonoBehaviour
     public Vector3 PegPos(int state, int row)
     {
         var clampedRow = Mathf.Clamp(row, 0, NumRows - 1);
-        var offset = (clampedRow - row) * new Vector3(0, 200, 0);
+        var offset = (clampedRow - row) * new Vector3(0, 200, 0) * Screen.width / 1200f;
         return pegGrid[state, clampedRow].transform.position + offset;
     }
 
