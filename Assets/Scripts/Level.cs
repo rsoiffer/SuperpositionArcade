@@ -52,6 +52,7 @@ public class Level : MonoBehaviour
     public Image commandHighlightPrefab;
     public Transform bucketHighlightsParent;
     public Image bucketHighlightsPrefab;
+    private readonly List<State> currentStates = new();
 
     private LevelDefinition _def;
     private Gate[,] gateGrid;
@@ -195,7 +196,7 @@ public class Level : MonoBehaviour
         if (VictoryPercent >= 1) victoryUI.SetActive(true);
     }
 
-    private void UpdateGateGrid()
+    private void UpdateGateGrid(bool force = false)
     {
         var newGateGrid = new Gate[NumBits, NumRows];
         for (var dim = 0; dim < NumBits; dim++)
@@ -207,7 +208,8 @@ public class Level : MonoBehaviour
         if (SequenceEquals(newGateGrid, gateGrid)
             && newScreenSize == prevScreenSize
             && updateAfterFrames != 0
-            && !scrollRectChanged)
+            && !scrollRectChanged
+            && !force)
             return;
 
         gateGrid = newGateGrid;
@@ -225,10 +227,12 @@ public class Level : MonoBehaviour
         for (var row = 0; row < NumRows; row++)
         {
             var gate = slotGrid[dim, row].GetComponentInChildren<Gate>();
-            if (gate != null) Destroy(gate.gameObject);
+            if (gate == null) continue;
+            gate.transform.SetParent(null, true);
+            Destroy(gate.gameObject);
         }
 
-        UpdateGateGrid();
+        UpdateGateGrid(true);
     }
 
     public void Cheat()
@@ -253,6 +257,15 @@ public class Level : MonoBehaviour
         UpdateGateGrid();
     }
 
+    public void Heat()
+    {
+        currentStates.RemoveAll(s => s == null);
+        foreach (var s in currentStates) s.Heat();
+        currentStates.Clear();
+
+        UpdateGateGrid();
+    }
+
     private IEnumerator SpawnCoroutine()
     {
         var spawnCooldown = 1f;
@@ -267,6 +280,7 @@ public class Level : MonoBehaviour
                 newState.level = this;
                 newState.variant = variant;
                 newState.ResetToState(_def.StartStates[variant]);
+                currentStates.Add(newState);
             }
 
             yield return null;
@@ -285,6 +299,7 @@ public class Level : MonoBehaviour
         var fidelity = state.quballs.Sum(q => (float)q.current.Dot(goalData).Real);
         victoryProgress += fidelity - (1 - fidelity) * wrongMultiplier;
         victoryProgress = Mathf.Clamp(victoryProgress, 0, victoryThreshold);
+        currentStates.Remove(state);
     }
 
     public List<Gate> Gates(int row)

@@ -166,4 +166,16 @@ public class State : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    public void Heat()
+    {
+        foreach (var q in quballs)
+        {
+            var newExplosion = Instantiate(explosionPrefab);
+            newExplosion.transform.position = q.transform.position;
+        }
+
+        SoundManager.Explosion();
+        Destroy(gameObject);
+    }
 }
