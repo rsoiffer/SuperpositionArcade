@@ -123,7 +123,7 @@ public class LevelDefinition : MonoBehaviour
 
             var goalData = GoalData(variant);
             var fidelity = data.Sum(q => (float)q.Dot(goalData).Real);
-            if (fidelity < .9f) return false;
+            if (fidelity is < .9f or > 1.1f) return false;
         }
 
         return true;
