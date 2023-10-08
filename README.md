@@ -1,6 +1,8 @@
 # Superposition Arcade
 
-[Play the game online on Itch.io!](https://rsoiffer.itch.io/superposition-arcade)
+[Play the game online on Itch.io](https://rsoiffer.itch.io/superposition-arcade)
+
+[Watch the video presentation on Youtube](https://youtu.be/slGN_CHQBy4)
 
 ![A screenshot of Superposition Arcade](screenshot.png)
 
