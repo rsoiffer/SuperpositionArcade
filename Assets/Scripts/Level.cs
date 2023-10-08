@@ -19,7 +19,7 @@ public class Level : MonoBehaviour
     public Bucket bucketYesPrefab;
     public Bucket bucketNoPrefab;
     public List<Transform> bucketTextParents;
-    public TextMeshProUGUI bucketTextPrefab;
+    public GameObject bucketTextPrefab;
     public Transform cannonsParent;
     public Bucket cannonYesPrefab;
     public Bucket cannonNoPrefab;
@@ -98,9 +98,8 @@ public class Level : MonoBehaviour
                 var bucketText = Instantiate(bucketTextPrefab, bucketTextParent);
                 var stateChars = Convert.ToString(state, 2).PadLeft(NumBits, '0').ToCharArray();
                 Array.Reverse(stateChars);
-                var stateText = string.Join("",
+                bucketText.GetComponentInChildren<TextMeshProUGUI>().text = string.Join("",
                     stateChars.Select((c, idx) => $"<color={ToRGBHex(dimensionsColors[idx])}>{c}</color>"));
-                bucketText.text = $"|{stateText}}}";
             }
         }
 

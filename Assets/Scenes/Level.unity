@@ -2157,7 +2157,7 @@ MonoBehaviour:
   bucketTextParents:
   - {fileID: 1586465590}
   - {fileID: 1937410984}
-  bucketTextPrefab: {fileID: 7457034273853726569, guid: 7b75ae93a149e464e888fc026c4f1c78,
+  bucketTextPrefab: {fileID: 3442770161529679090, guid: 7b75ae93a149e464e888fc026c4f1c78,
     type: 3}
   cannonsParent: {fileID: 1387061275}
   cannonYesPrefab: {fileID: 3997175638177723116, guid: d0bec0dc2f53a12409215d2dfc3dc95d,
