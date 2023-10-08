@@ -97,14 +97,8 @@ public class Peg : MonoBehaviour
         }
 
         if (gates.Select((g, i) => (g, i))
-                .Count(x => x.g != null && x.g.type == GateType.S && (state & (1 << x.i)) != 0) % 2 == 1)
-        {
-            imageZ.gameObject.SetActive(true);
-            return;
-        }
-
-        if (gates.Select((g, i) => (g, i))
-                .Count(x => x.g != null && x.g.type == GateType.T && (state & (1 << x.i)) != 0) % 2 == 1)
+                .Count(x => x.g != null && x.g.type is GateType.S or GateType.Sa or GateType.T or GateType.Ta &&
+                            (state & (1 << x.i)) != 0) % 2 == 1)
         {
             imageZ.gameObject.SetActive(true);
             return;
