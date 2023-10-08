@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class LevelDefinition : MonoBehaviour
 {
@@ -29,8 +30,6 @@ public class LevelDefinition : MonoBehaviour
 
     public void Parse()
     {
-        if (StartStates != null) return;
-
         StartStates = new List<int>();
         GoalStates = new List<int>();
         GoalPhases = new List<float>();
@@ -91,5 +90,42 @@ public class LevelDefinition : MonoBehaviour
         var goalState = GoalStates[variant];
         var goalAmplitude = Complex.FromPolarCoordinates(1, 2 * Mathf.PI * GoalPhases[variant]);
         return new QData(goalState, goalAmplitude);
+    }
+
+    public bool VerifySolution()
+    {
+        Parse();
+        var allGates = new List<Gate>();
+        allGates.AddRange(GatesBefore);
+        allGates.AddRange(GatesSolution);
+        allGates.AddRange(GatesAfter.AsEnumerable().Reverse());
+
+        for (var trial = 0; trial < 1000; trial++)
+        {
+            var variant = Random.Range(0, StartStates.Count);
+            var data = new List<QData> { new(StartStates[variant], Complex.One) };
+            for (var row = 0; row < allGates.Count / NumBits; row++)
+            {
+                var gates = allGates.GetRange(row * NumBits, NumBits);
+
+                for (var dim = 0; dim < gates.Count; dim++)
+                {
+                    if (gates[dim] == null) continue;
+                    if (gates[dim].type != GateType.Measure && gates[dim].type != GateType.Reset) continue;
+                    var prob1 = data.Sum(q => q.Bit(dim) ? q.Probability : 0);
+                    var measure1 = Random.value < prob1;
+                    data = data.Where(q => q.Bit(dim) == measure1).Select(q =>
+                        new QData(q.State, q.Amplitude / Mathf.Sqrt(measure1 ? prob1 : 1 - prob1))).ToList();
+                }
+
+                data = data.SelectMany(q => q.ApplyGateRow(gates)).ToList();
+            }
+
+            var goalData = GoalData(variant);
+            var fidelity = data.Sum(q => (float)q.Dot(goalData).Real);
+            if (fidelity < .9f) return false;
+        }
+
+        return true;
     }
 }

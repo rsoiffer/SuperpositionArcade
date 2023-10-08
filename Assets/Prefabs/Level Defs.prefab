@@ -53,7 +53,7 @@ MonoBehaviour:
   defPlaceable: X
   defBefore: C X
   defAfter: 
-  defSolution: 
+  defSolution: _ X
 --- !u!1 &1225535661701502153
 GameObject:
   m_ObjectHideFlags: 0
@@ -105,7 +105,11 @@ MonoBehaviour:
   defPlaceable: X H
   defBefore: 
   defAfter: 
-  defSolution: 
+  defSolution: 'H
+
+    X
+
+    H'
 --- !u!1 &1507145451829032842
 GameObject:
   m_ObjectHideFlags: 0
@@ -199,7 +203,7 @@ MonoBehaviour:
   defPlaceable: Z C
   defBefore: 
   defAfter: 
-  defSolution: 
+  defSolution: C Z
 --- !u!1 &1867696171128705726
 GameObject:
   m_ObjectHideFlags: 0
@@ -251,7 +255,7 @@ MonoBehaviour:
   defPlaceable: X
   defBefore: X
   defAfter: 
-  defSolution: 
+  defSolution: X
 --- !u!1 &2064367587194794636
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,7 +367,7 @@ MonoBehaviour:
   defPlaceable: H
   defBefore: H
   defAfter: 
-  defSolution: 
+  defSolution: H
 --- !u!1 &2913947207796907810
 GameObject:
   m_ObjectHideFlags: 0
@@ -415,7 +419,9 @@ MonoBehaviour:
   defPlaceable: X H
   defBefore: _ H
   defAfter: 
-  defSolution: 
+  defSolution: '_ H
+
+    _ X'
 --- !u!1 &3428743639963545237
 GameObject:
   m_ObjectHideFlags: 0
@@ -467,7 +473,11 @@ MonoBehaviour:
   defPlaceable: X Z
   defBefore: 
   defAfter: 
-  defSolution: 
+  defSolution: 'X
+
+    Z
+
+    X'
 --- !u!1 &3648098835207170432
 GameObject:
   m_ObjectHideFlags: 0
@@ -525,7 +535,11 @@ MonoBehaviour:
   defPlaceable: X C
   defBefore: 
   defAfter: 
-  defSolution: 
+  defSolution: 'C X
+
+    X C
+
+    C X'
 --- !u!1 &3668446410156609871
 GameObject:
   m_ObjectHideFlags: 0
@@ -577,7 +591,11 @@ MonoBehaviour:
   defPlaceable: X Z C
   defBefore: 
   defAfter: 
-  defSolution: 
+  defSolution: 'X X
+
+    C Z
+
+    X X'
 --- !u!1 &3805127662307195530
 GameObject:
   m_ObjectHideFlags: 0
@@ -629,7 +647,13 @@ MonoBehaviour:
   defPlaceable: X Z
   defBefore: 
   defAfter: 
-  defSolution: 
+  defSolution: 'Z
+
+    X
+
+    Z
+
+    X'
 --- !u!1 &4453439877287129314
 GameObject:
   m_ObjectHideFlags: 0
@@ -681,7 +705,11 @@ MonoBehaviour:
   defPlaceable: Z H
   defBefore: 
   defAfter: 
-  defSolution: 
+  defSolution: 'H
+
+    Z
+
+    H'
 --- !u!1 &5193685110532393550
 GameObject:
   m_ObjectHideFlags: 0
@@ -739,7 +767,11 @@ MonoBehaviour:
   defPlaceable: X C
   defBefore: 
   defAfter: 
-  defSolution: 
+  defSolution: '_ X
+
+    X C
+
+    _ X'
 --- !u!1 &5825457198390293240
 GameObject:
   m_ObjectHideFlags: 0
@@ -797,7 +829,7 @@ MonoBehaviour:
   defPlaceable: X C
   defBefore: 
   defAfter: 
-  defSolution: 
+  defSolution: X C
 --- !u!1 &6001254033485247304
 GameObject:
   m_ObjectHideFlags: 0
@@ -849,7 +881,9 @@ MonoBehaviour:
   defPlaceable: X H
   defBefore: 
   defAfter: _ H
-  defSolution: 
+  defSolution: '_ X
+
+    _ H'
 --- !u!1 &6050785624524867021
 GameObject:
   m_ObjectHideFlags: 0
@@ -901,7 +935,7 @@ MonoBehaviour:
   defPlaceable: X
   defBefore: 
   defAfter: 
-  defSolution: 
+  defSolution: _ X X
 --- !u!1 &6191452326705932743
 GameObject:
   m_ObjectHideFlags: 0
@@ -953,7 +987,7 @@ MonoBehaviour:
   defPlaceable: X
   defBefore: _ X
   defAfter: X _
-  defSolution: 
+  defSolution: X X
 --- !u!1 &6335545222689838888
 GameObject:
   m_ObjectHideFlags: 0
@@ -1151,7 +1185,7 @@ MonoBehaviour:
   defPlaceable: X
   defBefore: 
   defAfter: 
-  defSolution: 
+  defSolution: X
 --- !u!1 &9073276950462772554
 GameObject:
   m_ObjectHideFlags: 0
@@ -1209,7 +1243,7 @@ MonoBehaviour:
   defPlaceable: Z
   defBefore: 
   defAfter: 
-  defSolution: 
+  defSolution: Z Z
 --- !u!1 &9098340953040073891
 GameObject:
   m_ObjectHideFlags: 0
@@ -1261,4 +1295,4 @@ MonoBehaviour:
   defPlaceable: Z
   defBefore: 
   defAfter: 
-  defSolution: 
+  defSolution: Z
