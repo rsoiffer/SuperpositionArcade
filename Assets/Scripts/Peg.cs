@@ -67,7 +67,7 @@ public class Peg : MonoBehaviour
             return;
         }
 
-        if (gates.Any(g => g != null && g.type == GateType.H))
+        if (gates.Any(g => g != null && g.type is GateType.H or GateType.Measure or GateType.Reset or GateType.RandomX))
         {
             imageH.gameObject.SetActive(true);
             return;

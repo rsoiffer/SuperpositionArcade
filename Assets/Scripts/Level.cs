@@ -226,7 +226,7 @@ public class Level : MonoBehaviour
         for (var row = 0; row < NumRows; row++)
         {
             var gate = slotGrid[dim, row].GetComponentInChildren<Gate>();
-            if (gate == null) continue;
+            if (gate is not { isDraggable: true }) continue;
             gate.transform.SetParent(null, true);
             Destroy(gate.gameObject);
         }
@@ -245,6 +245,7 @@ public class Level : MonoBehaviour
         for (var dim = 0; dim < NumBits; dim++)
         {
             if (cheatGateId >= cheatGates.Count) continue;
+            if (!slotGrid[dim, row].acceptsGateDrops) continue;
             var gatePrefab = cheatGates[cheatGateId];
             cheatGateId++;
 
